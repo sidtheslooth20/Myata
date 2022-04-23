@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.musicplayerapp.StreamsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/streamsMenu"
+        tools:context=".fragments.StreamsFragment"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/streamsCurrentSong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:text="@{viewmodel.currentSongLive}"/>
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/streamMyata"
+            android:text="MYATA"
+            android:gravity="center_vertical"
+            android:paddingStart="30dp"
+            android:background="#FF3F7B"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:textColor="@color/black"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/streamXtra"
+            android:gravity="center_vertical"
+            android:layout_height="0dp"
+            android:textStyle="bold"
+            android:background="#00E5FF"
+            android:textSize="40sp"
+            android:textColor="@color/black"
+            android:text="XTRA"
+            android:paddingStart="30dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:gravity="center_vertical"
+            android:background="#FFFF00"
+            android:paddingStart="30dp"
+            android:text="GOLD HITS"
+            android:id="@+id/streamGoldHits"
+            android:textColor="@color/black"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/music"
+        android:title="music"
+        android:icon="@drawable/ic_note"/>
+
+    <item android:id="@+id/favorite"
+        android:title="favorite"
+        android:icon="@drawable/ic_likes"/>
+
+    <item android:id="@+id/info"
+        android:title="info"
+        android:icon="@drawable/ic_info"/>
+
+    <item android:id="@+id/donate"
+        android:title="donate"
+        android:icon="@drawable/ic_donate"/>
+</menu>
