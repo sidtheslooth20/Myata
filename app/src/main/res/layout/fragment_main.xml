@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.example.musicplayerapp.StreamsViewModel" />
+            type="com.example.musicplayerapp.StreamsViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,18 +80,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             >
             <TextView
+                android:textSize="16sp"
+                android:id="@+id/tv_myata"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="MYATA"/>
             <TextView
+                android:textSize="16sp"
+                android:id="@+id/tv_gold"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="GOLD HITS"/>
             <TextView
+                android:textSize="16sp"
+                android:id="@+id/tv_xtra"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight="1"

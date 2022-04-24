@@ -1,7 +1,9 @@
 package com.example.musicplayerapp
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider

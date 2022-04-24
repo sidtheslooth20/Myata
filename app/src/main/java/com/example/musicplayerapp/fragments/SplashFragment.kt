@@ -24,10 +24,8 @@ class SplashFragment : Fragment() {
         Handler().postDelayed(
             {
                 (requireActivity() as MainActivity).showBottomNavView()
-                (requireActivity() as MainActivity).viewModel.setup_stream(context)
                 findNavController().navigate(R.id.action_splashFragment_to_streamsFragment)
             }, 2000)
-
 
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }

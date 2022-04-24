@@ -50,17 +50,17 @@ class StreamsFragment : Fragment() {
 
 
         binding.streamGoldHits.setOnClickListener {
-            vm.currentStream = "gold"
+            vm.currentStream.value = "gold"
             findNavController().navigate(R.id.mainFragment)
         }
 
         binding.streamXtra.setOnClickListener {
-            vm.currentStream = "myata_hits"
+            vm.currentStream.value = "myata_hits"
             findNavController().navigate(R.id.mainFragment)
         }
 
         binding.streamMyata.setOnClickListener {
-            vm.currentStream = "myata"
+            vm.currentStream.value = "myata"
             findNavController().navigate(R.id.mainFragment)
         }
 

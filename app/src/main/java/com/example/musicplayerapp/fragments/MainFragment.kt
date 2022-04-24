@@ -1,5 +1,6 @@
 package com.example.musicplayerapp.fragments
 
+import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
@@ -12,11 +13,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.example.musicplayerapp.MainActivity
 import com.example.musicplayerapp.R
 import com.example.musicplayerapp.StreamsViewModel
 import com.example.musicplayerapp.databinding.FragmentMainBinding
 import com.example.musicplayerapp.databinding.FragmentStreamsBinding
+import com.example.musicplayerapp.service.MediaPlayerService
 import org.w3c.dom.Text
 
 
@@ -36,18 +39,35 @@ class MainFragment : Fragment() {
 
         binding.viewmodel = vm
 
-        binding.btnPlay.setOnClickListener {
+        vm.currentStream.observe(this, Observer {
 
-            vm.play_stream()
-//            val metaRetriever = MediaMetadataRetriever()
-//            metaRetriever.setDataSource(context, Uri.parse("https://radio-node-6.dline-media.com/myata"))
-//
-//            val artist: String? =  metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
-//            val song: String? = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-//
-//            vm.currentSongLive.value = song
-//            vm.currentAuthorLive.value = artist
+            binding.tvMyata.textSize = 16F
+            binding.tvGold.textSize = 16F
+            binding.tvXtra.textSize = 16F
+            when(it){
+                "myata"->binding.tvMyata.textSize = 20F
+                "gold"->binding.tvGold.textSize = 20F
+                "myata_hits"->binding.tvXtra.textSize = 20F
+            }
+
+        })
+
+        binding.btnPlay.setOnClickListener {
+             (activity as MainActivity).startService(Intent(context,MediaPlayerService::class.java).also{
+                 it.putExtra("DATA", vm.currentStream.value)
+             })
         }
+
+        binding.tvGold.setOnClickListener {
+            vm.currentStream.value = "gold"
+        }
+        binding.tvXtra.setOnClickListener {
+            vm.currentStream.value = "myata_hits"
+        }
+        binding.tvMyata.setOnClickListener {
+            vm.currentStream.value = "myata"
+        }
+
 
 
         return binding.root
