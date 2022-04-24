@@ -60,12 +60,21 @@ class MainFragment : Fragment() {
 
         binding.tvGold.setOnClickListener {
             vm.currentStream.value = "gold"
+            (activity as MainActivity).startService(Intent(context,MediaPlayerService::class.java).also{
+                it.putExtra("DATA", "gold")
+            })
         }
         binding.tvXtra.setOnClickListener {
             vm.currentStream.value = "myata_hits"
+            (activity as MainActivity).startService(Intent(context,MediaPlayerService::class.java).also{
+                it.putExtra("DATA", "myata_hits")
+            })
         }
         binding.tvMyata.setOnClickListener {
             vm.currentStream.value = "myata"
+            (activity as MainActivity).startService(Intent(context,MediaPlayerService::class.java).also{
+                it.putExtra("DATA", "myata")
+            })
         }
 
 

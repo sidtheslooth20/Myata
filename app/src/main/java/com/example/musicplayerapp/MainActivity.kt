@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
+
     fun showBottomNavView(){
         binding.bottomNavigationView.visibility = View.VISIBLE
     }

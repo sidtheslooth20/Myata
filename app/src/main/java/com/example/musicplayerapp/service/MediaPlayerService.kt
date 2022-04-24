@@ -5,16 +5,17 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.IBinder
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.musicplayerapp.MainActivity
 
 class MediaPlayerService: Service(){
 
     private lateinit var mediaPlayerMyata: MediaPlayer
-    private lateinit var mediaPlayerXtra: MediaPlayer
-    private lateinit var mediaPlayerGold: MediaPlayer
 
     var isRunning = false
-    var streamType: String? = "myata"
+    var streamType = MutableLiveData<String?>()
+
 
     override fun onBind(p0: Intent?): IBinder? {
        return null
@@ -29,13 +30,16 @@ class MediaPlayerService: Service(){
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         showNotification()
-        streamType = intent?.getStringExtra("DATA")
-        when(streamType){
-            "myata"->mediaPlayerMyata.start()
-            "gold"->mediaPlayerGold.start()
-            "myata_hits"->mediaPlayerXtra.start()
-        }
+        streamType.value = intent?.getStringExtra("DATA")
 
+        if(mediaPlayerMyata.isPlaying)
+            mediaPlayerMyata.pause()
+        mediaPlayerMyata.reset()
+        mediaPlayerMyata.setDataSource(this, Uri.parse("https://radio-node-6.dline-media.com/${streamType.value}"))
+        mediaPlayerMyata.prepare()
+        mediaPlayerMyata.setOnPreparedListener{
+            mediaPlayerMyata.start()
+        }
 
         return START_STICKY
     }
@@ -76,7 +80,5 @@ class MediaPlayerService: Service(){
 
     private fun initMusic(){
         mediaPlayerMyata = MediaPlayer.create(this, Uri.parse("https://radio-node-6.dline-media.com/myata"))
-        mediaPlayerXtra = MediaPlayer.create(this, Uri.parse("https://radio-node-6.dline-media.com/myata_hits"))
-        mediaPlayerGold = MediaPlayer.create(this, Uri.parse("https://radio-node-6.dline-media.com/gold"))
     }
 }
