@@ -54,7 +54,6 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                 }
             }
             catch (e: Exception){
-                Log.e("ERROR", "ERROR")
                 delay(1000)
                 continue
             }

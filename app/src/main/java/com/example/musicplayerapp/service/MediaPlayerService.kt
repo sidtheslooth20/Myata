@@ -9,9 +9,13 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.musicplayerapp.MainActivity
 
-class MediaPlayerService: Service(){
+class MediaPlayerService(name: String?) : IntentService(name){
 
     private lateinit var mediaPlayerMyata: MediaPlayer
+
+    constructor() : this("MediaPlayerService") {
+
+    }
 
     var isRunning = false
     var streamType = MutableLiveData<String?>()
@@ -21,9 +25,13 @@ class MediaPlayerService: Service(){
        return null
     }
 
+    override fun onHandleIntent(p0: Intent?) {
+
+    }
+
     override fun onCreate() {
         super.onCreate()
-
+        Log.e("SERVICE", "CREATED")
         initMusic()
         isRunning = true
         createNotificationChannel()
@@ -32,7 +40,7 @@ class MediaPlayerService: Service(){
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         showNotification()
         streamType.value = intent?.getStringExtra("DATA")
-
+        Log.e("SERVICE", "ONSCMD")
         if(mediaPlayerMyata.isPlaying)
             mediaPlayerMyata.pause()
         mediaPlayerMyata.reset()

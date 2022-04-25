@@ -23,16 +23,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewModel: StreamsViewModel
     lateinit var binding: ActivityMainBinding
 
-    private val connection = object : ServiceConnection {
-        override fun onServiceConnected(className: ComponentName, service: IBinder) {
-        }
-        override fun onServiceDisconnected(arg0: ComponentName) {
-        }
-    }
-
-    suspend fun createServiceAsync() = withContext(Dispatchers.IO){
-        createService()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,12 +34,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setupWithNavController(findNavController(R.id.navHostFragment))
         supportActionBar?.hide()
-    }
-
-    fun createService(){
-        Intent(this, MediaPlayerService::class.java).also {
-            bindService(it, connection, BIND_AUTO_CREATE)
-        }
     }
 
     fun showBottomNavView(){
