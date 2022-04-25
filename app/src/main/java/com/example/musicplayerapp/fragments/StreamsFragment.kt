@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.musicplayerapp.MainActivity
 import com.example.musicplayerapp.R
 import com.example.musicplayerapp.StreamsViewModel
-import com.example.musicplayerapp.StreamsViewModelFactory
 import com.example.musicplayerapp.databinding.FragmentStreamsBinding
 
 class StreamsFragment : Fragment() {
@@ -46,21 +44,18 @@ class StreamsFragment : Fragment() {
             }
         })
 
-        vm.currentSongLive.value = "MIKE SHINODA FT. UPSAHL"
-
-
         binding.streamGoldHits.setOnClickListener {
-            vm.currentStream.value = "gold"
+            vm.currentStreamLive.value = "gold"
             findNavController().navigate(R.id.mainFragment)
         }
 
         binding.streamXtra.setOnClickListener {
-            vm.currentStream.value = "myata_hits"
+            vm.currentStreamLive.value = "myata_hits"
             findNavController().navigate(R.id.mainFragment)
         }
 
         binding.streamMyata.setOnClickListener {
-            vm.currentStream.value = "myata"
+            vm.currentStreamLive.value = "myata"
             findNavController().navigate(R.id.mainFragment)
         }
 

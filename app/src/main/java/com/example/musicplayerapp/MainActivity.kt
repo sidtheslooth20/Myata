@@ -1,21 +1,38 @@
 package com.example.musicplayerapp
 
-import android.content.Context
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
+import android.os.IBinder
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.musicplayerapp.databinding.ActivityMainBinding
+import com.example.musicplayerapp.service.MediaPlayerService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel: StreamsViewModel
 
+    lateinit var viewModel: StreamsViewModel
     lateinit var binding: ActivityMainBinding
+
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+        }
+        override fun onServiceDisconnected(arg0: ComponentName) {
+        }
+    }
+
+    suspend fun createServiceAsync() = withContext(Dispatchers.IO){
+        createService()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +46,11 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
+    fun createService(){
+        Intent(this, MediaPlayerService::class.java).also {
+            bindService(it, connection, BIND_AUTO_CREATE)
+        }
+    }
 
     fun showBottomNavView(){
         binding.bottomNavigationView.visibility = View.VISIBLE

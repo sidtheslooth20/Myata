@@ -5,7 +5,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.IBinder
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.musicplayerapp.MainActivity
 
@@ -23,6 +23,7 @@ class MediaPlayerService: Service(){
 
     override fun onCreate() {
         super.onCreate()
+
         initMusic()
         isRunning = true
         createNotificationChannel()
@@ -35,7 +36,10 @@ class MediaPlayerService: Service(){
         if(mediaPlayerMyata.isPlaying)
             mediaPlayerMyata.pause()
         mediaPlayerMyata.reset()
-        mediaPlayerMyata.setDataSource(this, Uri.parse("https://radio-node-6.dline-media.com/${streamType.value}"))
+        mediaPlayerMyata.setDataSource(this, Uri.parse(
+            "https://radio-node-6.dline-media.com/${streamType.value}")
+        )
+
         mediaPlayerMyata.prepare()
         mediaPlayerMyata.setOnPreparedListener{
             mediaPlayerMyata.start()
@@ -48,6 +52,7 @@ class MediaPlayerService: Service(){
         super.onDestroy()
         isRunning = false
     }
+
 
     private fun showNotification(){
         val notificationIntent = Intent(this, MainActivity::class.java)
