@@ -22,6 +22,10 @@ import java.net.URL
 
 class StreamsViewModel(app: Application):AndroidViewModel(app) {
 
+    init {
+
+    }
+
     var currentSongLive = MutableLiveData<String?>()
     var currentAuthorLive = MutableLiveData<String?>()
     var songLayoutWeight = 0F
@@ -45,8 +49,9 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
 
                 client.newCall(request).execute().use { response->
                     if(!response.isSuccessful) throw IOException("Unexpected code $response")
+
                     val streamInfo =
-                        gson.fromJson(response.body()?.string(), Map::class.java).get("/gold") as Map<String, String?>
+                        gson.fromJson(response.body()?.string(), Map::class.java).get("/${currentStreamLive.value}") as Map<String, String?>
                     val songArtist = streamInfo.get("now_playing")?.split("- ")
 
                     currentSongLive.postValue(songArtist?.get(1))
@@ -59,6 +64,10 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
             }
             delay(5000)
         }
+    }
+
+    fun startService(){
+
     }
 
 

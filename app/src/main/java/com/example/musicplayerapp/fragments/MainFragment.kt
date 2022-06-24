@@ -26,6 +26,8 @@ class MainFragment : Fragment() {
 
         vm = (activity as MainActivity).viewModel
 
+        vm.getStreamJson()
+
         val binding: FragmentMainBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_main, container, false
@@ -41,7 +43,6 @@ class MainFragment : Fragment() {
                 "gold" -> binding.tvGold.textSize = 20F
                 "myata_hits" -> binding.tvXtra.textSize = 20F
             }
-
         })
 
         vm.currentSongLive.observe(this, Observer {
@@ -58,40 +59,18 @@ class MainFragment : Fragment() {
                     context,
                     MediaPlayerService::class.java
                 ).also {
-                    it.putExtra("DATA", vm.currentStreamLive.value)
+                    it.putExtra("STREAM", vm.currentStreamLive.value)
                 })
-            vm.getStreamJson()
         }
 
         binding.tvGold.setOnClickListener {
             vm.currentStreamLive.value = "gold"
-            (activity as MainActivity).startService(
-                Intent(
-                    context,
-                    MediaPlayerService::class.java
-                ).also {
-                    it.putExtra("DATA", "gold")
-                })
         }
         binding.tvXtra.setOnClickListener {
             vm.currentStreamLive.value = "myata_hits"
-            (activity as MainActivity).startService(
-                Intent(
-                    context,
-                    MediaPlayerService::class.java
-                ).also {
-                    it.putExtra("DATA", "myata_hits")
-                })
         }
         binding.tvMyata.setOnClickListener {
             vm.currentStreamLive.value = "myata"
-            (activity as MainActivity).startService(
-                Intent(
-                    context,
-                    MediaPlayerService::class.java
-                ).also {
-                    it.putExtra("DATA", "myata")
-                })
         }
 
 

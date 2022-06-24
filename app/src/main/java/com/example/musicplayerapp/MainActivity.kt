@@ -9,11 +9,13 @@ import android.os.IBinder
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.musicplayerapp.databinding.ActivityMainBinding
 import com.example.musicplayerapp.service.MediaPlayerService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
@@ -24,8 +26,18 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
 
+//    private val connection = object : ServiceConnection {
+//        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+//        }
+//        override fun onServiceDisconnected(arg0: ComponentName) {
+//        }
+//    }
+//
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
@@ -39,4 +51,10 @@ class MainActivity : AppCompatActivity() {
     fun showBottomNavView(){
         binding.bottomNavigationView.visibility = View.VISIBLE
     }
+//
+//    suspend fun createService() = withContext(Dispatchers.IO){
+//        Intent(this@MainActivity, MediaPlayerService::class.java).also {
+//            (this@MainActivity.bindService(it, connection, AppCompatActivity.BIND_AUTO_CREATE))
+//        }
+//    }
 }

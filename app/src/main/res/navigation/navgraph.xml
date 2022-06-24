@@ -21,10 +21,10 @@
         tools:layout="@layout/fragment_streams" >
         <action
             android:id="@+id/action_streamsFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/music" />
     </fragment>
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/music"
         android:name="com.example.musicplayerapp.fragments.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main">
@@ -32,4 +32,9 @@
             android:id="@+id/action_mainFragment_to_streamsFragment"
             app:destination="@id/streamsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/donate"
+        android:name="com.example.musicplayerapp.fragments.DonateFragment"
+        android:label="fragment_donate"
+        tools:layout="@layout/fragment_donate" />
 </navigation>
