@@ -30,6 +30,12 @@
             android:background="@drawable/text_view_circle"
             app:layout_constraintBottom_toBottomOf="@id/ovalrect">
 
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/photo"
+                />
+
             <TextView
                 android:id="@+id/main_author"
                 android:layout_marginTop="50dp"

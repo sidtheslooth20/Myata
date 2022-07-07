@@ -15,12 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.example.musicplayerapp.MainActivity
 import com.example.musicplayerapp.R
-import com.example.musicplayerapp.StreamsViewModel
-import com.example.musicplayerapp.databinding.ActivityMainBinding
-import com.example.musicplayerapp.databinding.FragmentStreamsBinding
-import com.example.musicplayerapp.service.MediaPlayerService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+
 
 class SplashFragment : Fragment() {
 

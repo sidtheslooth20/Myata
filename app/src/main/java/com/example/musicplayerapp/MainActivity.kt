@@ -13,7 +13,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.musicplayerapp.databinding.ActivityMainBinding
-import com.example.musicplayerapp.service.MediaPlayerService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -38,18 +37,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         val viewModelProviderFactory = StreamsViewModelFactory(application)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(StreamsViewModel ::class.java)
 
-        binding.bottomNavigationView.setupWithNavController(findNavController(R.id.navHostFragment))
+        //binding.bottomNavigationView.setupWithNavController(findNavController(R.id.navHostFragment))
         supportActionBar?.hide()
     }
 
     fun showBottomNavView(){
-        binding.bottomNavigationView.visibility = View.VISIBLE
+        //binding.bottomNavigationView.visibility = View.VISIBLE
     }
 //
 //    suspend fun createService() = withContext(Dispatchers.IO){

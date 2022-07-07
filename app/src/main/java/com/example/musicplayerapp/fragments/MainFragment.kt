@@ -1,7 +1,9 @@
 package com.example.musicplayerapp.fragments
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +11,24 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.musicplayerapp.MainActivity
+import com.example.musicplayerapp.service.MediaPlayerService
 import com.example.musicplayerapp.R
 import com.example.musicplayerapp.StreamsViewModel
 import com.example.musicplayerapp.databinding.FragmentMainBinding
-import com.example.musicplayerapp.service.MediaPlayerService
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.jsoup.Connection
+import org.jsoup.Jsoup
+import org.jsoup.select.Elements
+import org.w3c.dom.Document
+import java.io.IOException
 
 
 class MainFragment : Fragment() {
 
     lateinit var vm: StreamsViewModel
+    lateinit var binding: FragmentMainBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,12 +39,12 @@ class MainFragment : Fragment() {
 
         vm.getStreamJson()
 
-        val binding: FragmentMainBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_main, container, false
         )
 
-        vm.currentStreamLive.observe(this, Observer {
+        vm.currentStreamLive.observe(viewLifecycleOwner, Observer {
 
             binding.tvMyata.textSize = 16F
             binding.tvGold.textSize = 16F
@@ -43,14 +54,34 @@ class MainFragment : Fragment() {
                 "gold" -> binding.tvGold.textSize = 20F
                 "myata_hits" -> binding.tvXtra.textSize = 20F
             }
+            (activity as MainActivity).startService(
+                Intent(
+                    context,
+                    MediaPlayerService::class.java
+                ).also {
+                    it.putExtra("STREAM", vm.currentStreamLive.value)
+                    it.putExtra("ACTION", "switch")
+                })
+
         })
 
-        vm.currentSongLive.observe(this, Observer {
+        vm.currentImgLinkLive.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                Picasso.get().load(Uri.parse(it.replace("avatar170", "avatar770"))).into(binding.photo)
+            }
+        })
+
+        vm.currentSongLive.observe(viewLifecycleOwner, Observer {
             binding.mainSong.text = vm.currentSongLive.value
         })
 
-        vm.currentAuthorLive.observe(this, Observer {
+        vm.currentAuthorLive.observe(viewLifecycleOwner, Observer {
             binding.mainAuthor.text = vm.currentAuthorLive.value
+            if(it!=null){
+                GlobalScope.launch {
+                    getImage()
+                }
+            }
         })
 
         binding.btnPlay.setOnClickListener {
@@ -60,6 +91,7 @@ class MainFragment : Fragment() {
                     MediaPlayerService::class.java
                 ).also {
                     it.putExtra("STREAM", vm.currentStreamLive.value)
+                    it.putExtra("ACTION", "startStop")
                 })
         }
 
@@ -76,6 +108,24 @@ class MainFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    fun getImage() {
+        try {
+            val doc: org.jsoup.nodes.Document = Jsoup.connect(
+                "https://last.fm/music/${
+                    vm.currentAuthorLive.value
+                        ?.trim()?.replace(" ", "+")
+                }/+images"
+            ).get()
+
+            val elements: Elements = doc.select("ul[class=image-list]")
+            vm.currentImgLinkLive.postValue(elements.select("a[class=image-list-item]")
+                .select("img").attr("src"))
+
+        } catch (e:IOException){
+            Log.e("IOException", "smth wrong with image parse")
+        }
     }
 
 }

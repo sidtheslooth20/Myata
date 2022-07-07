@@ -35,7 +35,7 @@ class StreamsFragment : Fragment() {
         songLayoutParameters.weight = vm.songLayoutWeight
         binding.viewmodel = vm
 
-        vm.currentSongLive.observe(this, Observer {
+        vm.currentSongLive.observe(viewLifecycleOwner, Observer {
             if(it == null){
                 songLayoutParameters.weight = vm.setSongLayoutWeight(0F)
             }
