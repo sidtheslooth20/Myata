@@ -11,8 +11,8 @@
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_splashFragment_to_streamsFragment"
-            app:destination="@id/streamsFragment" />
+            android:id="@+id/action_splashFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/streamsFragment"
@@ -25,11 +25,11 @@
     </fragment>
     <fragment
         android:id="@+id/music"
-        android:name="com.example.musicplayerapp.fragments.MainFragment"
+        android:name="com.example.musicplayerapp.fragments.PlayerFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main">
+        tools:layout="@layout/fragment_player">
         <action
-            android:id="@+id/action_mainFragment_to_streamsFragment"
+            android:id="@+id/action_music_to_streamsFragment"
             app:destination="@id/streamsFragment" />
     </fragment>
     <fragment
@@ -37,4 +37,13 @@
         android:name="com.example.musicplayerapp.fragments.DonateFragment"
         android:label="fragment_donate"
         tools:layout="@layout/fragment_donate" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.musicplayerapp.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_streamsFragment2"
+            app:destination="@id/streamsFragment" />
+    </fragment>
 </navigation>

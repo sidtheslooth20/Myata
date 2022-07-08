@@ -1,110 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".fragments.MainFragment">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal"
+            android:layout_weight="7"
+            android:id="@+id/streams"
+            tools:listitem="@layout/rw_stream_item"
+            android:background="#FF00FF">
 
-        <ImageView
-            android:id="@+id/ovalrect"
-            android:background="@drawable/image_view_ovalrect"
-            android:layout_width="300dp"
-            android:layout_height="400dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center" />
+        </androidx.recyclerview.widget.RecyclerView>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_height="280dp"
-            android:layout_width="280dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/text_view_circle"
-            app:layout_constraintBottom_toBottomOf="@id/ovalrect">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="Плейлисты"
+            android:layout_weight="1" />
 
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/photo"
-                />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:id="@+id/playlists"
+            android:background="#00F0FF">
 
-            <TextView
-                android:id="@+id/main_author"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="30dp"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:maxLines="2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                />
-            <TextView
-                android:id="@+id/main_song"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:layout_marginStart="10dp"
-                android:maxLines="2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/bottom_streams"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:id="@+id/bottom_streams"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
-            <TextView
-                android:textSize="16sp"
-                android:id="@+id/tv_myata"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <ImageView
                 android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="MYATA"/>
-            <TextView
-                android:textSize="16sp"
-                android:id="@+id/tv_gold"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_donate"
+                android:id="@+id/to_stream"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="GOLD HITS"/>
-            <TextView
-                android:textSize="16sp"
-                android:id="@+id/tv_xtra"
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="XTRA"/>
+                android:src="@drawable/ic_info"
+                android:layout_weight="1" />
+
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 </layout>

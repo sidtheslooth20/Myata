@@ -18,8 +18,6 @@ class MediaPlayerService(): Service(){
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
-
         when(intent?.getStringExtra("ACTION")){
             "startStop"->{
                 if(exoPlayer.isPlaying)
@@ -47,9 +45,7 @@ class MediaPlayerService(): Service(){
     }
 
     override fun onCreate() {
-
         exoPlayer = ExoPlayer.Builder(this).build()
-
         super.onCreate()
     }
 

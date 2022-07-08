@@ -66,10 +66,6 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
         }
     }
 
-    fun startService(){
-
-    }
-
 
     fun setSongLayoutWeight(weight: Float): Float{
         songLayoutWeight = weight
