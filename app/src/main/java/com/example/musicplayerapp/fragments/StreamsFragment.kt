@@ -18,8 +18,6 @@ class StreamsFragment : Fragment() {
 
     private lateinit var vm: StreamsViewModel
 
-    lateinit var songLayoutParameters : LinearLayout.LayoutParams
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,35 +26,31 @@ class StreamsFragment : Fragment() {
         val binding: FragmentStreamsBinding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_streams, container,false)
 
-        songLayoutParameters = binding.streamsCurrentSong.layoutParams as LinearLayout.LayoutParams
-
-
         vm = (activity as MainActivity).viewModel
-        songLayoutParameters.weight = vm.songLayoutWeight
         binding.viewmodel = vm
 
-        vm.currentSongLive.observe(viewLifecycleOwner, Observer {
-            if(it == null){
-                songLayoutParameters.weight = vm.setSongLayoutWeight(0F)
-            }
-            else{
-                songLayoutParameters.weight = vm.setSongLayoutWeight(2F)
-            }
-        })
 
-        binding.streamGoldHits.setOnClickListener {
-            vm.currentStreamLive.value = "gold"
-            findNavController().navigate(R.id.music)
-        }
-
-        binding.streamXtra.setOnClickListener {
-            vm.currentStreamLive.value = "myata_hits"
-            findNavController().navigate(R.id.music)
-        }
-
-        binding.streamMyata.setOnClickListener {
+        binding.myataStreamBanner.setOnClickListener {
             vm.currentStreamLive.value = "myata"
-            findNavController().navigate(R.id.music)
+            findNavController().navigate(R.id.player_myata)
+        }
+
+        binding.goldStreamBanner.setOnClickListener {
+            vm.currentStreamLive.value = "gold"
+            findNavController().navigate(R.id.player_myata)
+        }
+
+        binding.xtraStreamBanner.setOnClickListener {
+            vm.currentStreamLive.value = "myata_hits"
+            findNavController().navigate(R.id.player_myata)
+        }
+
+        binding.homeBtn.setOnClickListener {
+            findNavController().navigate(R.id.mainFragment)
+        }
+
+        binding.playerBtn.setOnClickListener {
+            findNavController().navigate(R.id.player_myata)
         }
 
         return binding.root

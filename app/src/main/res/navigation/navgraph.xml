@@ -21,13 +21,13 @@
         tools:layout="@layout/fragment_streams" >
         <action
             android:id="@+id/action_streamsFragment_to_mainFragment"
-            app:destination="@id/music" />
+            app:destination="@id/player_myata" />
     </fragment>
     <fragment
-        android:id="@+id/music"
-        android:name="com.example.musicplayerapp.fragments.PlayerFragment"
+        android:id="@+id/player_myata"
+        android:name="com.example.musicplayerapp.fragments.PlayerMyataFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_player">
+        tools:layout="@layout/fragment_player_myata">
         <action
             android:id="@+id/action_music_to_streamsFragment"
             app:destination="@id/streamsFragment" />
@@ -45,5 +45,28 @@
         <action
             android:id="@+id/action_mainFragment_to_streamsFragment2"
             app:destination="@id/streamsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_donate"
+            app:destination="@id/donate" />
+        <action
+            android:id="@+id/action_mainFragment_to_player_myata"
+            app:destination="@id/player_myata" />
+        <action
+            android:id="@+id/action_mainFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.example.musicplayerapp.fragments.InfoFragment"
+        android:label="InfoFragment" >
+        <action
+            android:id="@+id/action_infoFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_infoFragment_to_donate"
+            app:destination="@id/donate" />
+        <action
+            android:id="@+id/action_infoFragment_to_player_myata"
+            app:destination="@id/player_myata" />
     </fragment>
 </navigation>

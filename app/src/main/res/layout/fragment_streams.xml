@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -8,67 +9,72 @@
             type="com.example.musicplayerapp.StreamsViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/streamsMenu"
         tools:context=".fragments.StreamsFragment"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/streams_bg">
 
-        <FrameLayout
-            android:id="@+id/streamsCurrentSong"
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="2">
+            android:layout_width="wrap_content"
+            android:src="@drawable/___myata"
+            android:layout_gravity="center"
+            android:id="@+id/myata_stream_banner"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textSize="30sp"
-                android:text="@{viewmodel.currentSongLive}"/>
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/__gold"
+            android:layout_gravity="center"
+            android:id="@+id/gold_stream_banner"
+            app:layout_constraintTop_toBottomOf="@id/myata_stream_banner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-        </FrameLayout>
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/__xtra"
+            android:layout_gravity="center"
+            android:id="@+id/xtra_stream_banner"
+            app:layout_constraintTop_toBottomOf="@+id/gold_stream_banner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-        <TextView
-            android:id="@+id/streamMyata"
-            android:text="MYATA"
-            android:gravity="center_vertical"
-            android:paddingStart="30dp"
-            android:background="#FF3F7B"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:textColor="@color/black"
-            android:layout_height="0dp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_weight="1" />
+            android:layout_height="60dp"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:id="@+id/streamXtra"
-            android:gravity="center_vertical"
-            android:layout_height="0dp"
-            android:textStyle="bold"
-            android:background="#7A6AB5"
-            android:textSize="40sp"
-            android:textColor="@color/black"
-            android:text="XTRA"
-            android:paddingStart="30dp"
-            android:layout_width="match_parent"
-            android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/home_btn"
+                android:layout_weight="1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/home_btn"
+                />
+            <ImageView
+                android:id="@+id/player_btn"
+                android:layout_weight="1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/player_btn"
+                />
 
-        <TextView
-            android:gravity="center_vertical"
-            android:background="#FFFF00"
-            android:paddingStart="30dp"
-            android:text="GOLD HITS"
-            android:id="@+id/streamGoldHits"
-            android:textColor="@color/black"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:layout_height="0dp"
-            android:layout_width="match_parent"
-            android:layout_weight="1" />
+        </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

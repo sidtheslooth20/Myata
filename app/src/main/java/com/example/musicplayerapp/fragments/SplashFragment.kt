@@ -17,6 +17,8 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val screen = (0..9).random()
         Handler().postDelayed(
             {
                 findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
