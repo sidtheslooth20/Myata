@@ -29,19 +29,19 @@
                     android:id="@+id/myata_stream_banner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/___myata"/>
+                    android:src="@drawable/myata_banner"/>
 
                 <ImageView
                     android:id="@+id/gold_stream_banner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/__gold"/>
+                    android:src="@drawable/gold_banner"/>
 
                 <ImageView
                     android:id="@+id/xtra_stream_banner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/__xtra"/>
+                    android:src="@drawable/xtra_banner"/>
 
             </LinearLayout>
 

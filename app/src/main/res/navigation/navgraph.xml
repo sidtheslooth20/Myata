@@ -25,9 +25,9 @@
     </fragment>
     <fragment
         android:id="@+id/player_myata"
-        android:name="com.example.musicplayerapp.fragments.PlayerMyataFragment"
+        android:name="com.example.musicplayerapp.fragments.PlayerFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_player_myata">
+        tools:layout="@layout/fragment_player">
         <action
             android:id="@+id/action_music_to_streamsFragment"
             app:destination="@id/streamsFragment" />
@@ -36,7 +36,11 @@
         android:id="@+id/donate"
         android:name="com.example.musicplayerapp.fragments.DonateFragment"
         android:label="fragment_donate"
-        tools:layout="@layout/fragment_donate" />
+        tools:layout="@layout/fragment_donate" >
+        <action
+            android:id="@+id/action_donate_to_player_myata"
+            app:destination="@id/player_myata" />
+    </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.musicplayerapp.fragments.MainFragment"

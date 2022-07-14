@@ -1,7 +1,6 @@
 package com.example.musicplayerapp.fragments
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,34 +13,29 @@ import androidx.navigation.fragment.findNavController
 import com.example.musicplayerapp.MainActivity
 import com.example.musicplayerapp.R
 import com.example.musicplayerapp.StreamsViewModel
-import com.example.musicplayerapp.databinding.FragmentPlayerMyataBinding
+import com.example.musicplayerapp.databinding.FragmentPlayerBinding
 import com.example.musicplayerapp.service.MediaPlayerService
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 
-class PlayerMyataFragment : Fragment() {
+class PlayerFragment : Fragment() {
 
     lateinit var vm: StreamsViewModel
-    lateinit var binding: FragmentPlayerMyataBinding
-    private var x1 = 0f
-    private var x2 = 0f
-    val minDistance = 150
-
+    lateinit var binding: FragmentPlayerBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         vm = (activity as MainActivity).viewModel
-        var stream = vm.currentStreamLive.value
 
         if(vm.currentAuthorLive.value == null)
             vm.getStreamJson()
 
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_player_myata, container, false
+            R.layout.fragment_player, container, false
         )
 
         updatePlayer()
@@ -60,10 +54,27 @@ class PlayerMyataFragment : Fragment() {
             if (it != null) {
                 Picasso.get().load(Uri.parse(it.replace("avatar170", "avatar770"))).transform(CropCircleTransformation()).resize(800,800).centerCrop().into(binding.photo)
             }
+            else
+                binding.logo.setImageResource(R.drawable.logo)
         })
 
         vm.currentSongLive.observe(viewLifecycleOwner, Observer {
             binding.mainSong.text = vm.currentSongLive.value
+            (activity as MainActivity).startService(
+                Intent(
+                    context,
+                    MediaPlayerService::class.java
+                ).also {
+                    it.putExtra("ACTION", "switch_track")
+                    if(vm.currentAuthorLive.value != null && vm.currentSongLive.value!= null) {
+                        it.putExtra("SONG", vm.currentSongLive.value)
+                        it.putExtra("ARTIST", vm.currentAuthorLive.value)
+                    }
+                    else{
+                        it.putExtra("SONG", "You are listening to")
+                        it.putExtra("ARTIST", "Radio Myata")
+                    }
+                })
         })
 
         vm.currentAuthorLive.observe(viewLifecycleOwner, Observer {
@@ -87,7 +98,7 @@ class PlayerMyataFragment : Fragment() {
                 })
             if(!vm.isPlaying) {
                 binding.btnPlay.setImageResource(R.drawable.pause_btn)
-                vm.isPlaying = true
+
             }
             else {
                 binding.btnPlay.setImageResource(R.drawable.btn_play)
@@ -114,6 +125,14 @@ class PlayerMyataFragment : Fragment() {
             ).also {
                 it.putExtra("STREAM", vm.currentStreamLive.value)
                 it.putExtra("ACTION", "switch")
+                if(vm.currentAuthorLive.value != null && vm.currentSongLive.value!= null) {
+                    it.putExtra("SONG", vm.currentSongLive.value)
+                    it.putExtra("ARTIST", vm.currentAuthorLive.value)
+                }
+                else{
+                    it.putExtra("SONG", "You are listening to")
+                    it.putExtra("ARTIST", "Radio Myata")
+                }
             })
         if(!vm.isPlaying) {
             binding.btnPlay.setImageResource(R.drawable.btn_play)
@@ -121,6 +140,7 @@ class PlayerMyataFragment : Fragment() {
         else {
             binding.btnPlay.setImageResource(R.drawable.pause_btn)
         }
+
     }
 
 }

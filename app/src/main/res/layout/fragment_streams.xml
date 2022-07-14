@@ -9,7 +9,7 @@
             type="com.example.musicplayerapp.StreamsViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/streamsMenu"
@@ -17,47 +17,48 @@
         android:orientation="vertical"
         android:background="@drawable/streams_bg">
 
-        <ImageView
-            android:layout_marginTop="20dp"
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:src="@drawable/___myata"
-            android:layout_gravity="center"
-            android:id="@+id/myata_stream_banner"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            android:layout_width="match_parent"
+            android:layout_weight="9"
+            android:orientation="vertical">
 
-        <ImageView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:src="@drawable/__gold"
-            android:layout_gravity="center"
-            android:id="@+id/gold_stream_banner"
-            app:layout_constraintTop_toBottomOf="@id/myata_stream_banner"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            <ImageView
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:src="@drawable/myata_banner"
+                android:layout_gravity="center"
+                android:id="@+id/myata_stream_banner"
+                />
 
-        <ImageView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:src="@drawable/__xtra"
-            android:layout_gravity="center"
-            android:id="@+id/xtra_stream_banner"
-            app:layout_constraintTop_toBottomOf="@+id/gold_stream_banner"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            <ImageView
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:src="@drawable/gold_banner"
+                android:layout_gravity="center"
+                android:id="@+id/gold_stream_banner"
+                />
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:src="@drawable/xtra_banner"
+                android:layout_gravity="center"
+                android:id="@+id/xtra_stream_banner"
+                />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:id="@+id/bttmline"
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/home_btn"
@@ -76,5 +77,5 @@
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

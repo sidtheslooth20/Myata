@@ -5,17 +5,16 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.example.musicplayerapp.R
 import com.example.musicplayerapp.databinding.FragmentDonateBinding
-import com.example.musicplayerapp.databinding.FragmentStreamsBinding
+
 
 class DonateFragment : Fragment() {
 
@@ -37,6 +36,18 @@ class DonateFragment : Fragment() {
             intent.addCategory(Intent.CATEGORY_BROWSABLE)
             intent.setData(Uri.parse("https://music.yandex.ru/users/shaldin.voice/playlists/"))
             startActivity(intent)
+        }
+
+        binding.homeBtn.setOnClickListener {
+            findNavController().navigate(R.id.mainFragment)
+        }
+
+        binding.playerBtn.setOnClickListener {
+            findNavController().navigate(R.id.player_myata)
+        }
+
+        binding.infoBtn.setOnClickListener {
+            findNavController().navigate(R.id.infoFragment)
         }
 
         return binding.root

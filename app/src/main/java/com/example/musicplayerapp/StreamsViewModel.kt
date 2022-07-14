@@ -22,7 +22,6 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
 
     var currentSongLive = MutableLiveData<String?>()
     var currentAuthorLive = MutableLiveData<String?>()
-    var songLayoutWeight = 0F
     var isPlaying = false
     var currentStreamLive = MutableLiveData<String?>()
     var currentImgLinkLive = MutableLiveData<String?>()
@@ -55,12 +54,10 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                     val songArtist = streamInfo.get("now_playing")?.split("- ")
 
                     if(currentSongLive.value != songArtist?.get(1)) {
-                        currentSongLive.postValue(songArtist?.get(1))
                         currentAuthorLive.postValue(songArtist?.get(0))
+                        currentSongLive.postValue(songArtist?.get(1))
                     }
-
                 }
-
             }
             catch (e: Exception){
                 delay(1000)
@@ -75,7 +72,7 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
             val doc: org.jsoup.nodes.Document = Jsoup.connect(
                 "https://last.fm/music/${
                     currentAuthorLive.value
-                        !!.trim().replace("/","%2F").replace(" ft."," feat").replace(" ", "+")
+                        !!.trim().replace("/","%2F").replace(" ft."," feat.").replace(" ", "+")
                 }/+images"
             ).get()
 
@@ -88,12 +85,7 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                 currentAuthorLive.value
                 !!.trim().replace("/","%2F").replace(" ft."," feat").replace(" ", "+")
             }/+images")
+            currentImgLinkLive.postValue(null)
         }
-    }
-
-
-    fun setSongLayoutWeight(weight: Float): Float{
-        songLayoutWeight = weight
-        return weight
     }
 }

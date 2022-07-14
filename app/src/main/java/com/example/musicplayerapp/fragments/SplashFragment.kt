@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.example.musicplayerapp.R
+import com.example.musicplayerapp.databinding.FragmentSplashBinding
 
 
 class SplashFragment : Fragment() {
@@ -17,14 +19,16 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val binding: FragmentSplashBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_splash, container, false
+        )
 
-        val screen = (0..9).random()
         Handler().postDelayed(
             {
                 findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
             }, 2000)
 
-        return inflater.inflate(R.layout.fragment_splash, container, false)
+        return binding.root
     }
 
 }
