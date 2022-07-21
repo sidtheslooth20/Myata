@@ -30,6 +30,7 @@
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/image_view_ovalrect.xml" value="0.2703125" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/payment_switch.xml" value="0.2703125" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/payment_thumb.xml" value="0.2703125" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/shadow_rect.xml" value="0.1395" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/font/muller.xml" value="0.22625580413676658" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout-sw600dp/fragment_main.xml" value="0.1" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/activity_main.xml" value="0.176" />
@@ -41,7 +42,7 @@
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_song.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_splash.xml" value="0.536" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_streams.xml" value="0.11911231884057971" />
-        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/rw_playlist_item.xml" value="0.109375" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/rw_playlist_item.xml" value="0.136" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/rw_stream_item.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
       </map>

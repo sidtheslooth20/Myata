@@ -71,10 +71,8 @@ class MainFragment : Fragment() {
             findNavController().navigate(R.id.donate)
         }
 
-        vm.getPlaylists()
-
         binding.playlists.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.playlists.adapter = PlaylistAdapter(playlistPicsUri,playlistNames)
+        binding.playlists.adapter = vm.playlistList.value?.let { PlaylistAdapter(it) }
 
 
         // Inflate the layout for this fragment

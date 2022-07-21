@@ -31,10 +31,10 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
         val viewModelProviderFactory = StreamsViewModelFactory(application)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(StreamsViewModel ::class.java)
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         supportActionBar?.hide()
     }
