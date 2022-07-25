@@ -9,33 +9,36 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebViewClient
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import com.example.musicplayerapp.MainActivity
 import com.example.musicplayerapp.R
+import com.example.musicplayerapp.StreamsViewModel
 import com.example.musicplayerapp.databinding.FragmentDonateBinding
 
 
 class DonateFragment : Fragment() {
+
+    lateinit var vm: StreamsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+
         val binding: FragmentDonateBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_donate, container, false
         )
 
-        binding.summ.addTextChangedListener {
-            binding.summ.background.setColorFilter(Color.CYAN,PorterDuff.Mode.MULTIPLY)
-        }
+        vm = (activity as MainActivity).viewModel
 
-        binding.sendBtn.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.addCategory(Intent.CATEGORY_BROWSABLE)
-            intent.setData(Uri.parse("https://music.yandex.ru/users/shaldin.voice/playlists/"))
-            startActivity(intent)
+        binding.webView.apply {
+            this.settings.javaScriptEnabled = true
+            webViewClient = WebViewClient()
+            loadUrl(getString(R.string.donate_url))
         }
 
         binding.homeBtn.setOnClickListener {
@@ -43,7 +46,13 @@ class DonateFragment : Fragment() {
         }
 
         binding.playerBtn.setOnClickListener {
-            findNavController().navigate(R.id.player_myata)
+            findNavController().navigate(R.id.playerFragment, Bundle().apply {
+                when(vm.currentStreamLive.value){
+                    "myata"->putInt(CURRENT_ITEM, 0)
+                    "gold"->putInt(CURRENT_ITEM, 1)
+                    "myata_hits"->putInt(CURRENT_ITEM, 2)
+                }
+            })
         }
 
         binding.infoBtn.setOnClickListener {

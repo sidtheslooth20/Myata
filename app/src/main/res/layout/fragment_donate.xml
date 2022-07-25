@@ -24,80 +24,14 @@
             android:fontFamily="@font/mullerthin"
             android:textColor="#FFFFFF" />
 
-
-        <LinearLayout
-            android:id="@+id/line1"
-            android:layout_height="wrap_content"
+        <WebView
             android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/webView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintBottom_toTopOf="@id/comment_text">
-
-            <EditText
-                android:hint="Сумма"
-                android:inputType="numberDecimal"
-                android:layout_height="wrap_content"
-                android:background="@drawable/sum"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:maxHeight="60dp"
-                android:id="@+id/summ"/>
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:layout_width="wrap_content"
-                android:layout_weight="2"
-                android:layout_height="66dp"
-                app:switchMinWidth="250dp"
-                android:layout_gravity="center"
-                android:id="@+id/type_switch"
-                android:thumb="@drawable/payment_thumb"
-                app:track="@drawable/payment_switch"
-                android:layout_marginEnd="20dp" />
-
-        </LinearLayout>
-
-
-        <ImageView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/photo" />
-
-        <ImageView
-            android:layout_marginTop="40dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/comment_img"
-            android:layout_width="wrap_content"
-            android:src="@drawable/comment_field"
-            app:layout_constraintTop_toBottomOf="@id/line1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <EditText
-            android:layout_height="wrap_content"
-            android:id="@+id/comment_text"
-            android:background="@null"
-            android:maxWidth="300dp"
-            android:maxHeight="150dp"
-            android:hint="Комментарий"
-            android:layout_width="300dp"
-            app:layout_constraintTop_toTopOf="@id/comment_img"
-            app:layout_constraintStart_toStartOf="@id/comment_img"
-            app:layout_constraintEnd_toEndOf="@id/comment_img"/>
-
-        <ImageView
-            android:id="@+id/send_btn"
-            android:src="@drawable/send_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:paddingBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@id/bottom_streams"
-            />
+            app:layout_constraintBottom_toTopOf="@id/bottom_streams"/>
 
         <LinearLayout
             android:layout_width="match_parent"

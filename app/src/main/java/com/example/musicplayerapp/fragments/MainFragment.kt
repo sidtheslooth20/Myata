@@ -1,5 +1,6 @@
 package com.example.musicplayerapp.fragments
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -15,20 +16,11 @@ import com.example.musicplayerapp.R
 import com.example.musicplayerapp.StreamsViewModel
 import com.example.musicplayerapp.adapters.PlaylistAdapter
 import com.example.musicplayerapp.databinding.FragmentMainBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.parser.Parser
-import org.jsoup.select.Elements
-import java.io.IOException
 
 
 class MainFragment : Fragment() {
 
     lateinit var binding: FragmentMainBinding
-    var playlistPicsUri = mutableListOf<Uri>()
-    var playlistNames = mutableListOf<String>()
     lateinit var vm: StreamsViewModel
 
 
@@ -43,10 +35,9 @@ class MainFragment : Fragment() {
             inflater,
             R.layout.fragment_main, container, false
         )
+        binding.playlists.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.playlists.adapter = vm.playlistList.value?.let { PlaylistAdapter(it, { position -> onItemClick(position)}) }
 
-//        GlobalScope.launch {
-//            getPlaylistsInfo()
-//        }
 
         binding.infoBtn.setOnClickListener {
             findNavController().navigate(R.id.infoFragment)
@@ -54,50 +45,39 @@ class MainFragment : Fragment() {
 
         binding.myataStreamBanner.setOnClickListener {
             vm.currentStreamLive.value = "myata"
-            findNavController().navigate(R.id.player_myata)
+            findNavController().navigate(R.id.playerFragment, Bundle().apply {
+                putInt(CURRENT_ITEM, 0)
+            })
         }
 
         binding.goldStreamBanner.setOnClickListener {
             vm.currentStreamLive.value = "gold"
-            findNavController().navigate(R.id.player_myata)
+            findNavController().navigate(R.id.playerFragment, Bundle().apply {
+                putInt(CURRENT_ITEM, 1)
+            })
         }
 
         binding.xtraStreamBanner.setOnClickListener {
             vm.currentStreamLive.value = "myata_hits"
-            findNavController().navigate(R.id.player_myata)
+            findNavController().navigate(R.id.playerFragment, Bundle().apply {
+                putInt(CURRENT_ITEM, 2)
+            })
         }
 
         binding.donateBtn.setOnClickListener {
             findNavController().navigate(R.id.donate)
         }
 
-        binding.playlists.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.playlists.adapter = vm.playlistList.value?.let { PlaylistAdapter(it) }
-
-
         // Inflate the layout for this fragment
         return binding.root
     }
 
-    //нужно понять какой запрос отправлять, затем Retrofit -> playlists.jsx
-    private fun getPlaylistsInfo() {
-        try {
-            val doc:Document = Jsoup.parse(
-                "https://music.yandex.ru/users/shaldin.voice/playlists", "", Parser.xmlParser())
-            val elements: Elements = doc.select("div[class=playlist playlist_selectable]")
-            for (el in elements){
-                playlistPicsUri.add(Uri.parse("https:"+el.select(
-                    "img[class=playlist-cover__img deco-pane]").attr("srcset")))
-                playlistNames.add(el.select(
-                    "div[class=playlist__title deco-typo typo-main]").attr("title"))
 
-                Log.d("PLLST", "https:"+el.select(
-                    "img[class=playlist-cover__img deco-pane]").attr("srcset") + "========" + el.select(
-                    "div[class=playlist__title deco-typo typo-main]").attr("title"))
-            }
-        } catch (e: IOException){
-            Log.e("IOException", "smth wrong with image parse")
-        }
+    private fun onItemClick(position: Int){
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.addCategory(Intent.CATEGORY_BROWSABLE)
+        intent.setData(Uri.parse(vm.playlistList.value!![position].uri))
+        startActivity(intent)
     }
 
 }

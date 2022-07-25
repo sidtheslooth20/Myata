@@ -5,6 +5,7 @@ import android.app.Service
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.IBinder
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 
@@ -15,9 +16,11 @@ class MediaPlayerService(): Service(){
     val myataItem = MediaItem.fromUri("https://radio-node-6.dline-media.com/myata")
     val xtraItem = MediaItem.fromUri("https://radio-node-6.dline-media.com/myata_hits")
     val goldItem = MediaItem.fromUri("https://radio-node-6.dline-media.com/gold")
+
     var playerNotificationManager: PlayerNotificationManager? = null
     var song: String = ""
     var artist: String = ""
+    var isRunning = true
 
     val mediaDescriptionAdapter = object: PlayerNotificationManager.MediaDescriptionAdapter{
         override fun getCurrentContentTitle(player: Player): CharSequence {
@@ -83,7 +86,20 @@ class MediaPlayerService(): Service(){
     }
 
     override fun onCreate() {
-        exoPlayer = ExoPlayer.Builder(this).build()
+        exoPlayer = ExoPlayer.Builder(this).build().apply {
+            addListener(object: Player.Listener{
+
+                override fun onIsPlayingChanged(isPlaying: Boolean) {
+                    super.onIsPlayingChanged(isPlaying)
+                    val intent = Intent("play_pause").apply {
+                    }
+
+                    LocalBroadcastManager.getInstance(this@MediaPlayerService)
+                        .sendBroadcast(intent)
+                }
+            })
+        }
+
 
         playerNotificationManager = PlayerNotificationManager.Builder(
             this, 1, "1")
@@ -92,6 +108,7 @@ class MediaPlayerService(): Service(){
             .build()
 
         playerNotificationManager!!.setPlayer(exoPlayer)
+
         super.onCreate()
     }
 }

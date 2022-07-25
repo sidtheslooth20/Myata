@@ -9,19 +9,27 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.musicplayerapp.MainActivity
 import com.example.musicplayerapp.R
+import com.example.musicplayerapp.StreamsViewModel
 import com.example.musicplayerapp.databinding.FragmentInfoBinding
 
 class InfoFragment : Fragment() {
+
+    private lateinit var vm: StreamsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+
+
         val binding: FragmentInfoBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_info, container, false
         )
+
+        vm = (activity as MainActivity).viewModel
 
         binding.yandex.setOnClickListener{
             val intent = Intent(Intent.ACTION_VIEW)
@@ -72,9 +80,14 @@ class InfoFragment : Fragment() {
             startActivity(intent)
         }
 
-
         binding.playerBtn.setOnClickListener {
-            findNavController().navigate(R.id.player_myata)
+            findNavController().navigate(R.id.playerFragment, Bundle().apply {
+                when(vm.currentStreamLive.value){
+                    "myata"->putInt(CURRENT_ITEM, 0)
+                    "gold"->putInt(CURRENT_ITEM, 1)
+                    "myata_hits"->putInt(CURRENT_ITEM, 2)
+                }
+            })
         }
         binding.donateBtn.setOnClickListener {
             findNavController().navigate(R.id.donate)
