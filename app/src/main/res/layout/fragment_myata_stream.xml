@@ -11,15 +11,35 @@
         android:background="@drawable/myata_bg"
         android:id="@+id/constraint_layout">
 
-        <ImageView
-            android:layout_width="match_parent"
+        <FrameLayout
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/main_author"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/logo"
-            android:id="@+id/logo"
-            />
+            >
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/logo"
+                app:layout_constraintBottom_toTopOf="@+id/main_author"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/logo"
+                app:layout_constraintBottom_toTopOf="@+id/main_author"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/main_author"
@@ -29,7 +49,7 @@
             android:textSize="30sp"
             android:gravity="center"
             android:textStyle="bold"
-            android:maxLines="2"
+            android:maxLines="3"
             android:textColor="#FFFF00"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,8 +67,8 @@
             android:gravity="center"
             android:textColor="#FFFF00"
             android:layout_marginStart="10dp"
-            android:fontFamily="@font/mullerthin"
-            android:maxLines="2"
+            android:fontFamily="@font/mullerregular"
+            android:maxLines="3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
@@ -74,7 +94,6 @@
             android:layout_height="60dp"
             android:orientation="horizontal"
             android:id="@+id/bottom_streams"
-            android:layout_marginBottom="30dp"
             app:layout_constraintBottom_toBottomOf="@+id/constraint_layout"
             app:layout_constraintStart_toStartOf="parent">
             <ImageView

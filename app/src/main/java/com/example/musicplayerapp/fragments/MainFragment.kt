@@ -28,7 +28,6 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         vm = (activity as MainActivity).viewModel
 
         binding = DataBindingUtil.inflate(
@@ -37,7 +36,6 @@ class MainFragment : Fragment() {
         )
         binding.playlists.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.playlists.adapter = vm.playlistList.value?.let { PlaylistAdapter(it, { position -> onItemClick(position)}) }
-
 
         binding.infoBtn.setOnClickListener {
             findNavController().navigate(R.id.infoFragment)

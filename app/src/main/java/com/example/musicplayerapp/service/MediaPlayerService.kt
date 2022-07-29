@@ -1,10 +1,13 @@
 package com.example.musicplayerapp.service
 
-import android.app.PendingIntent
-import android.app.Service
+import android.app.*
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.IBinder
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
@@ -20,7 +23,7 @@ class MediaPlayerService(): Service(){
     var playerNotificationManager: PlayerNotificationManager? = null
     var song: String = ""
     var artist: String = ""
-    var isRunning = true
+
 
     val mediaDescriptionAdapter = object: PlayerNotificationManager.MediaDescriptionAdapter{
         override fun getCurrentContentTitle(player: Player): CharSequence {
@@ -53,6 +56,7 @@ class MediaPlayerService(): Service(){
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
         when(intent?.getStringExtra("ACTION")){
             "startStop"->{
                 if(exoPlayer.isPlaying)
@@ -82,10 +86,22 @@ class MediaPlayerService(): Service(){
             }
         }
 
-        return super.onStartCommand(intent, flags, startId)
+        return START_NOT_STICKY
     }
 
     override fun onCreate() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notification: Notification = Notification.Builder(this, createNotificationChannel("307","307"))
+                .build()
+            startForeground(307, notification)
+        } else {
+            val notification: Notification = Notification.Builder(this)
+                .build()
+            startForeground(307, notification)
+        }
+
+        Log.e("Service","Create")
         exoPlayer = ExoPlayer.Builder(this).build().apply {
             addListener(object: Player.Listener{
 
@@ -100,15 +116,33 @@ class MediaPlayerService(): Service(){
             })
         }
 
-
         playerNotificationManager = PlayerNotificationManager.Builder(
-            this, 1, "1")
-            .setChannelNameResourceId(R.string.exo_download_notification_channel_name)
+            this, 307, "307")
             .setMediaDescriptionAdapter(mediaDescriptionAdapter)
             .build()
 
         playerNotificationManager!!.setPlayer(exoPlayer)
 
         super.onCreate()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel(channelId: String, channelName: String): String{
+        val chan = NotificationChannel(channelId,
+            channelName, NotificationManager.IMPORTANCE_LOW)
+
+        val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        service.createNotificationChannel(chan)
+        return channelId
+    }
+
+    override fun onDestroy() {
+
+        playerNotificationManager?.setPlayer(null)
+        stopForeground(true)
+        stopSelf()
+        Log.e("Service","Stopped")
+        exoPlayer.release()
+        super.onDestroy()
     }
 }

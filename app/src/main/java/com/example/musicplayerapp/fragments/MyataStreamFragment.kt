@@ -23,6 +23,7 @@ const val STREAM = "myata"
 
 class MyataStreamFragment() : Fragment() {
 
+
     lateinit var vm: StreamsViewModel
     lateinit var binding: FragmentMyataStreamBinding
     var stream: String = "myata"
@@ -43,6 +44,9 @@ class MyataStreamFragment() : Fragment() {
             R.layout.fragment_myata_stream, container, false
         )
 
+        binding.mainAuthor.text = ""
+
+
         vm.isPlaying.observe(viewLifecycleOwner, Observer {
             if(it){
                 binding.btnPlay.setImageResource(R.drawable.pause_btn)
@@ -56,16 +60,25 @@ class MyataStreamFragment() : Fragment() {
             "myata"->{
                 binding.constraintLayout.setBackgroundResource(R.drawable.myata_bg)
                 vm.currentMyataState.observe(viewLifecycleOwner, Observer {
+                    binding.logo.setImageResource(R.drawable.logo)
                     if (it != null) {
                         if (it.artist != null) {
                             if(!it.artist!!.isBlank()) {
                                 if (it.img != null) {
-                                    Picasso.get()
-                                        .load(Uri.parse(it.img!!.replace("avatar170", "avatar770")))
-                                        .transform(CropCircleTransformation()).resize(800, 800)
-                                        .centerCrop().into(binding.logo)
-                                } else
+                                    if(!it.img!!.isBlank()){
+                                        Picasso.get()
+                                            .load(Uri.parse(it.img!!.replace("avatar170", "avatar770")))
+                                            .fit()
+                                            .transform(CropCircleTransformation())
+                                            .centerCrop().into(binding.photo)
+                                    }
+                                    else{
+                                        binding.logo.setImageResource(R.drawable.logo)
+                                    }
+                                } else {
                                     binding.logo.setImageResource(R.drawable.logo)
+                                }
+
 
                                 binding.mainSong.text = vm.currentMyataState.value!!.song
                                 binding.mainAuthor.text = vm.currentMyataState.value!!.artist
@@ -103,16 +116,26 @@ class MyataStreamFragment() : Fragment() {
             "gold"-> {
                 binding.constraintLayout.setBackgroundResource(R.drawable.gold_bg)
                 vm.currentGoldState.observe(viewLifecycleOwner, Observer {
+                    binding.logo.setImageResource(R.drawable.logo)
                     if (it != null) {
                         if(it.artist!=null) {
                             if(!it.artist!!.isBlank()) {
                                 if (it.img != null) {
-                                    Picasso.get()
-                                        .load(Uri.parse(it.img!!.replace("avatar170", "avatar770")))
-                                        .transform(CropCircleTransformation()).resize(800, 800)
-                                        .centerCrop().into(binding.logo)
-                                } else
+                                    if(!it.img!!.isBlank()){
+                                        Picasso.get()
+                                            .load(Uri.parse(it.img!!.replace("avatar170", "avatar770")))
+                                            .transform(CropCircleTransformation())
+                                            .fit()
+                                            .centerCrop().into(binding.photo)
+                                        binding.logo.clearAnimation()
+                                    }
+                                    else{
+                                        binding.logo.setImageResource(R.drawable.logo)
+                                    }
+                                } else {
                                     binding.logo.setImageResource(R.drawable.logo)
+
+                                }
 
                                 binding.mainSong.text = vm.currentGoldState.value!!.song
                                 binding.mainAuthor.text = vm.currentGoldState.value!!.artist
@@ -141,7 +164,7 @@ class MyataStreamFragment() : Fragment() {
                             }
                         }
                     }
-                    else{
+                    else {
                         binding.mainAuthor.text = "YOU ARE LISTENING"
                         binding.mainSong.text = "RADIO MYATA"
                         binding.logo.setImageResource(R.drawable.logo)
@@ -151,16 +174,25 @@ class MyataStreamFragment() : Fragment() {
             "myata_hits"->{
                 binding.constraintLayout.setBackgroundResource(R.drawable.xtra_bg)
                 vm.currentXtraState.observe(viewLifecycleOwner, Observer {
+                    binding.logo.setImageResource(R.drawable.logo)
                     if (it != null) {
                         if(it.artist!=null) {
                             if(!it.artist!!.isBlank()) {
                                 if (it.img != null) {
-                                    Picasso.get()
-                                        .load(Uri.parse(it.img!!.replace("avatar170", "avatar770")))
-                                        .transform(CropCircleTransformation()).resize(800, 800)
-                                        .centerCrop().into(binding.logo)
-                                } else
+                                    if (!it.img!!.isBlank()){
+                                        Picasso.get()
+                                            .load(Uri.parse(it.img!!.replace("avatar170", "avatar770")))
+                                            .transform(CropCircleTransformation())
+                                            .fit()
+                                            .centerCrop().into(binding.photo)
+                                        binding.logo.clearAnimation()
+                                    }
+                                    else{
+                                        binding.logo.setImageResource(R.drawable.logo)
+                                    }
+                                } else {
                                     binding.logo.setImageResource(R.drawable.logo)
+                                }
 
                                 binding.mainSong.text = vm.currentXtraState.value!!.song
                                 binding.mainAuthor.text = vm.currentXtraState.value!!.artist
@@ -199,8 +231,6 @@ class MyataStreamFragment() : Fragment() {
             }
         }
 
-        updatePlayer()
-
         binding.btnPlay.setOnClickListener {
             (activity as MainActivity).startService(
                 Intent(
@@ -229,6 +259,7 @@ class MyataStreamFragment() : Fragment() {
     }
 
     fun updatePlayer(){
+
         (activity as MainActivity).startService(
             Intent(
                 context,

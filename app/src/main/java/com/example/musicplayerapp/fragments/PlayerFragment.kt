@@ -1,5 +1,6 @@
 package com.example.musicplayerapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.example.musicplayerapp.R
 import com.example.musicplayerapp.StreamsViewModel
 import com.example.musicplayerapp.adapters.FragmentStreamAdapter
 import com.example.musicplayerapp.databinding.FragmentPlayerBinding
+import com.example.musicplayerapp.service.MediaPlayerService
 
 const val CURRENT_ITEM = "0"
 
@@ -55,6 +57,11 @@ class PlayerFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    override fun onDestroy() {
+        (activity as MainActivity).stopService(Intent(context, MediaPlayerService::class.java))
+        super.onDestroy()
     }
 
 }

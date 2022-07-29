@@ -23,6 +23,7 @@
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1615" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/gradient_bg_main_menu.xml" value="0.1205" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/ic_____________.xml" value="0.1" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/ic_donate.xml" value="0.185" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1615" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/ic_switch_bank.xml" value="0.2703125" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/ic_switch_umoney.xml" value="0.2703125" />
@@ -32,9 +33,10 @@
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/payment_thumb.xml" value="0.2703125" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/shadow_rect.xml" value="0.1395" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/font/muller.xml" value="0.22625580413676658" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/font/muller_regular.xml" value="0.22625580413676658" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout-sw600dp/fragment_main.xml" value="0.1" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/activity_main.xml" value="0.176" />
-        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_donate.xml" value="0.176" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_donate.xml" value="0.2" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_info.xml" value="0.16905901116427433" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_main.xml" value="0.2" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_myata_stream.xml" value="0.20521590423257802" />

@@ -2,6 +2,7 @@ package com.example.musicplayerapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.musicplayerapp.databinding.ActivityMainBinding
@@ -37,5 +38,18 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         supportActionBar?.hide()
+    }
+
+    override fun onStop() {
+        viewModel.isUIActive = false
+        Log.d("MainActivity", "Stop")
+        super.onStop()
+    }
+
+    override fun onRestart() {
+        Log.d("MainActivity", "Restart")
+        viewModel.isUIActive = true
+        viewModel.getStreamJson()
+        super.onRestart()
     }
 }

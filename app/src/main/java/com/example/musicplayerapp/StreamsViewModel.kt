@@ -6,21 +6,19 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
-import androidx.navigation.fragment.findNavController
-import com.example.musicplayerapp.retrofitthings.Retrofitinstance
+import com.example.musicplayerapp.service.MediaPlayerService
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.*
-import okhttp3.Cache.Companion.varyHeaders
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import java.io.IOException
@@ -35,10 +33,19 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
     var playlistList = MutableLiveData<MutableList<YandexPlaylist>>()
     var currentStreamLive = MutableLiveData<String?>()
     private val context = getApplication<Application>().applicationContext
+    var isUIActive = true
 
 
     init {
         isPlaying.value = false
+        val intent = Intent(context, MediaPlayerService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(intent)
+        } else {
+            context.startService(intent)
+        }
+
+        currentStreamLive.value = "myata"
 
         val receiver = PlayPauseBroadcastReceiver()
         context?.let {
@@ -55,7 +62,16 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
     }
 
     fun getPlaylists() = viewModelScope.launch {
-        requestYandex()
+        while (true){
+            try{
+                requestYandex()
+                break
+            }
+            catch (e:Exception){
+                Log.e("Exception: ",e.toString())
+                continue
+            }
+        }
     }
 
     suspend fun requestYandex() = withContext(Dispatchers.IO){
@@ -90,7 +106,7 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
     suspend fun parseJson() = withContext(Dispatchers.IO){
 
         val client = OkHttpClient.Builder().build()
-        while (true) {
+        while (isUIActive) {
             val gson = Gson()
             try{
                 val request = Request.Builder()
@@ -107,26 +123,18 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                     if(currentMyataState.value?.song != songArtist?.get(1)) {
                         try {
                             val doc: org.jsoup.nodes.Document = Jsoup.connect(
-                                "https://last.fm/music/${
-                                    songArtist?.get(0)?.split(" ft.")?.get(0)
-                                    !!.trim().replace("/", "%2F").replace(" ft.", " feat.")
-                                        .replace(" ", "+")
-                                }/+images"
+                                songArtist?.let { formUrl(it) }
                             ).get()
-                            Log.e("ft", "https://last.fm/music/${
-                                songArtist?.get(0)?.split(" ft.")?.get(0)
-                                !!.trim().replace("/", "%2F").replace(" ft.", " feat.")
-                                    .replace(" ", "+")
-                            }/+images")
 
                             val elements: Elements = doc.select("ul[class=image-list]")
                             currentMyataState.postValue(
                                 PlayerState(
                                     songArtist?.get(0), songArtist?.get(1),
                                         elements.select("a[class=image-list-item]")
-                                            .select("img").attr("src")
-                                )
+                                            .select("img").attr("src"))
                             )
+                            Log.d("IMG", elements.select("a[class=image-list-item]")
+                                .select("img").attr("src"))
                         }
                         catch (ex: IOException){
                             currentMyataState.postValue(
@@ -134,6 +142,7 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                                     songArtist?.get(0), songArtist?.get(1), null
                                 )
                             )
+                            Log.e("Exception", ex.toString())
                         }
                     }
                     val streamGoldInfo = streamInfo.get("/gold") as Map<String, String?>
@@ -141,17 +150,8 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                     if(currentGoldState.value?.song != songArtist?.get(1)) {
                         try {
                             val doc: org.jsoup.nodes.Document = Jsoup.connect(
-                                "https://last.fm/music/${
-                                    songArtist?.get(0)?.split(" ft.")?.get(0)
-                                    !!.trim().replace("/", "%2F")
-                                        .replace(" ", "+")
-                                }/+images"
+                                songArtist?.let { formUrl(it) }
                             ).get()
-                            Log.e("ft", "https://last.fm/music/${
-                                songArtist?.get(0)?.split(" ft.")?.get(0)
-                                !!.trim().replace("/", "%2F").replace(" ft.", " feat.")
-                                    .replace(" ", "+")
-                            }/+images")
 
                             val elements: Elements = doc.select("ul[class=image-list]")
                             currentGoldState.postValue(
@@ -161,6 +161,8 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                                             .select("img").attr("src")
                                 )
                             )
+                            Log.d("IMG", elements.select("a[class=image-list-item]")
+                                .select("img").attr("src"))
                         }
                         catch (ex: IOException){
                             currentGoldState.postValue(
@@ -168,6 +170,7 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                                     songArtist?.get(0), songArtist?.get(1), null
                                 )
                             )
+                            Log.e("Exception", ex.toString())
                         }
                     }
                     val streamXtraInfo = streamInfo.get("/myata_hits") as Map<String, String?>
@@ -175,17 +178,8 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                     if(currentXtraState.value?.song != songArtist?.get(1)) {
                         try {
                             val doc: org.jsoup.nodes.Document = Jsoup.connect(
-                                "https://last.fm/music/${
-                                    songArtist?.get(0)?.split(" ft.")?.get(0)
-                                    !!.trim().replace("/", "%2F").replace(" ft.", " feat.")
-                                        .replace(" ", "+")
-                                }/+images"
+                                songArtist?.let { formUrl(it) }
                             ).get()
-                            Log.e("ft", "https://last.fm/music/${
-                                songArtist?.get(0)?.split(" ft.")?.get(0)
-                                !!.trim().replace("/", "%2F").replace(" ft.", " feat.")
-                                    .replace(" ", "+")
-                            }/+images")
 
                             val elements: Elements = doc.select("ul[class=image-list]")
                             currentXtraState.postValue(
@@ -195,6 +189,8 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                                             .select("img").attr("src")
                                 )
                             )
+                            Log.d("IMG", elements.select("a[class=image-list-item]")
+                                .select("img").attr("src"))
                         }
                         catch (ex: IOException){
                             currentXtraState.postValue(
@@ -202,26 +198,33 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                                     songArtist?.get(0), songArtist?.get(1), null
                                     )
                             )
+                            Log.e("Exception", ex.toString())
                         }
                     }
                 }
             }
             catch (e: Exception){
+                Log.e("Exception", e.toString())
                 delay(3000)
-                Log.d("e", e.toString())
-                Log.e("VM", currentMyataState.value?.song.toString())
-                Log.e("VM", currentMyataState.value?.artist.toString())
-                Log.e("VM", currentMyataState.value?.img.toString())
-                Log.e("VM2", currentGoldState.value?.song.toString())
-                Log.e("VM2", currentGoldState.value?.artist.toString())
-                Log.e("VM2", currentGoldState.value?.img.toString())
-                Log.e("VM3", currentXtraState.value?.song.toString())
-                Log.e("VM3", currentXtraState.value?.artist.toString())
-                Log.e("VM3", currentXtraState.value?.img.toString())
                 continue
             }
             delay(5000)
         }
+    }
+
+    fun formUrl(songArtist: List<String>): String{
+        Log.d("URL", "https://last.fm/music/${songArtist.get(0)
+            ?.lowercase()?.split(" ft.")?.get(0)!!.trim()
+            .replace("/", "%2F")
+            .replace(" ", "+")
+        }/+images")
+
+        return "https://last.fm/music/${songArtist.get(0)
+            ?.lowercase()?.split(" ft.")?.get(0)!!.trim()
+            .replace("/", "%2F")
+            .replace(" ", "+")
+        }/+images"
+
     }
 
     class YandexPlaylist(uri: String, img: Uri){
