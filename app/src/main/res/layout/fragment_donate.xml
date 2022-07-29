@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
@@ -50,24 +51,24 @@
                         tools:ignore="Suspicious0dp">
                         <LinearLayout
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
+
                             android:layout_marginBottom="20dp"
                             android:gravity="center"
                             android:layout_width="match_parent"
                             android:orientation="horizontal">
+
                             <EditText
                                 android:id="@+id/summ"
-                                android:layout_height="match_parent"
                                 android:layout_width="wrap_content"
-                                android:inputType="number"
-                                android:hint="Сумма"
-                                android:gravity="center"
+                                android:layout_height="96dp"
                                 android:background="@drawable/sum"
-                                />
+                                android:gravity="center"
+                                android:hint="Сумма"
+                                android:inputType="number" />
 
                             <Switch
-                                android:switchMinWidth="250dp"
-                                android:layout_width="250dp"
+                                android:switchMinWidth="240dp"
+                                android:layout_width="240dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:thumb="@drawable/payment_thumb"
@@ -86,13 +87,15 @@
                             android:background="@drawable/comment_field"
                             android:maxWidth="350dp"
                             android:maxHeight="145dp"
+                            android:layout_marginStart="5dp"
                             android:paddingLeft="10dp"
                             android:layout_width="350dp" />
 
                         <Button
                             android:id="@+id/sendBtn"
                             android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
+                            android:layout_width="345dp"
+                            android:layout_marginStart="5dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/send_btn"/>

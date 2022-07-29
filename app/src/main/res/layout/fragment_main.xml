@@ -17,7 +17,6 @@
             android:orientation="horizontal"
             android:layout_weight="7"
             android:id="@+id/streams"
-            tools:listitem="@layout/rw_stream_item"
             android:scrollbars="none">
 
             <LinearLayout
@@ -28,6 +27,7 @@
                 <ImageView
                     android:id="@+id/myata_stream_banner"
                     android:layout_width="wrap_content"
+                    android:paddingStart="15dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/myata_banner"/>
 
@@ -52,11 +52,15 @@
             android:layout_height="0dp"
             android:text="Плейлисты"
             android:textSize="25sp"
+            android:gravity=""
+            android:fontFamily="@font/mullerlight"
             android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
             android:textColor="@color/black"
             android:layout_weight="1" />
 
         <androidx.recyclerview.widget.RecyclerView
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="6"
