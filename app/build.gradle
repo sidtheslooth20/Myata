@@ -43,6 +43,7 @@ dependencies {
 
     def exoplayerVersion = '2.18.0'
     def retrofitVersion = '2.9.0'
+
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation("androidx.viewpager2:viewpager2:1.0.0")

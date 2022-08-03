@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicplayerapp.MainActivity
@@ -62,12 +64,31 @@ class MainFragment : Fragment() {
             })
         }
 
+        vm.isInSplitMode.observe(viewLifecycleOwner, Observer {
+            if(it){
+                binding.playlists.visibility = View.GONE
+                binding.bottomNav.visibility = View.GONE
+                binding.playlistString.visibility = View.GONE
+            }
+        })
+
         binding.donateBtn.setOnClickListener {
             findNavController().navigate(R.id.donate)
         }
 
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    override fun onResume() {
+
+        if (!vm.isInSplitMode.value!!){
+            binding.playlists.visibility = View.VISIBLE
+            binding.bottomNav.visibility = View.VISIBLE
+            binding.playlistString.visibility = View.VISIBLE
+        }
+
+        super.onResume()
     }
 
 

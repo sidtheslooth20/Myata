@@ -30,14 +30,18 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
     var currentGoldState = MutableLiveData<PlayerState?>()
     var currentXtraState = MutableLiveData<PlayerState?>()
     var isPlaying = MutableLiveData<Boolean>()
+    var isInSplitMode = MutableLiveData<Boolean>()
     var playlistList = MutableLiveData<MutableList<YandexPlaylist>>()
     var currentStreamLive = MutableLiveData<String?>()
     private val context = getApplication<Application>().applicationContext
     var isUIActive = true
+    //To avoid reaction on swich stream pause
+    var ifNeedToListenReciever = true
 
 
     init {
         isPlaying.value = false
+        isInSplitMode.value = false
         val intent = Intent(context, MediaPlayerService::class.java)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(intent)
@@ -47,10 +51,17 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
 
         currentStreamLive.value = "myata"
 
-        val receiver = PlayPauseBroadcastReceiver()
+        val receiver1 = PlayPauseBroadcastReceiver()
         context?.let {
-            LocalBroadcastManager.getInstance(it).registerReceiver(receiver,
-                IntentFilter("play_pause")
+            LocalBroadcastManager.getInstance(it).registerReceiver(receiver1,
+                IntentFilter("play")
+            )
+        }
+
+        val receiver2 = PlayPauseBroadcastReceiver()
+        context?.let {
+            LocalBroadcastManager.getInstance(it).registerReceiver(receiver2,
+                IntentFilter("pause")
             )
         }
 
@@ -205,10 +216,10 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
             }
             catch (e: Exception){
                 Log.e("Exception", e.toString())
-                delay(3000)
+                delay(500)
                 continue
             }
-            delay(5000)
+            delay(1000)
         }
     }
 
@@ -240,7 +251,11 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
 
     inner class PlayPauseBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            isPlaying.value = !isPlaying.value!!
+            if (intent != null) {
+                if(ifNeedToListenReciever)
+                    isPlaying.value = intent.action == "play"
+                ifNeedToListenReciever = true
+            }
         }
     }
 }

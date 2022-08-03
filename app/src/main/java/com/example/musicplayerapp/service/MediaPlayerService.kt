@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.MutableLiveData
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
@@ -23,6 +24,8 @@ class MediaPlayerService(): Service(){
     var playerNotificationManager: PlayerNotificationManager? = null
     var song: String = ""
     var artist: String = ""
+    var stream: String = ""
+    lateinit var notification: Notification
 
 
     val mediaDescriptionAdapter = object: PlayerNotificationManager.MediaDescriptionAdapter{
@@ -62,20 +65,28 @@ class MediaPlayerService(): Service(){
                 if(exoPlayer.isPlaying)
                     exoPlayer.pause()
                 else{
-                    when(intent.getStringExtra("STREAM")){
-                        "myata"->{exoPlayer.setMediaItem(myataItem)}
-                        "gold"->{exoPlayer.setMediaItem(goldItem)}
-                        "myata_hits"->{exoPlayer.setMediaItem(xtraItem)}
+                    if (stream != intent.getStringExtra("STREAM")!!)
+                    {
+                        stream = intent.getStringExtra("STREAM")!!
+                        when(stream){
+                            "myata"->{exoPlayer.setMediaItem(myataItem)}
+                            "gold"->{exoPlayer.setMediaItem(goldItem)}
+                            "myata_hits"->{exoPlayer.setMediaItem(xtraItem)}
+                        }
                     }
                     exoPlayer.prepare()
                     exoPlayer.play()
                 }
             }
             "switch"->{
-                when(intent.getStringExtra("STREAM")){
-                    "myata"->{exoPlayer.setMediaItem(myataItem)}
-                    "gold"->{exoPlayer.setMediaItem(goldItem)}
-                    "myata_hits"->{exoPlayer.setMediaItem(xtraItem)}
+                if (stream != intent.getStringExtra("STREAM")!!)
+                {
+                    stream = intent.getStringExtra("STREAM")!!
+                    when(stream){
+                        "myata"->{exoPlayer.setMediaItem(myataItem)}
+                        "gold"->{exoPlayer.setMediaItem(goldItem)}
+                        "myata_hits"->{exoPlayer.setMediaItem(xtraItem)}
+                    }
                 }
                 song = intent.getStringExtra("SONG")!!
                 artist = intent.getStringExtra("ARTIST")!!
@@ -86,17 +97,17 @@ class MediaPlayerService(): Service(){
             }
         }
 
-        return START_NOT_STICKY
+        return START_STICKY
     }
 
     override fun onCreate() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notification: Notification = Notification.Builder(this, createNotificationChannel("307","307"))
+            notification = Notification.Builder(this, createNotificationChannel("307","307"))
                 .build()
             startForeground(307, notification)
         } else {
-            val notification: Notification = Notification.Builder(this)
+            notification = Notification.Builder(this)
                 .build()
             startForeground(307, notification)
         }
@@ -104,12 +115,13 @@ class MediaPlayerService(): Service(){
         Log.e("Service","Create")
         exoPlayer = ExoPlayer.Builder(this).build().apply {
             addListener(object: Player.Listener{
-
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
                     super.onIsPlayingChanged(isPlaying)
-                    val intent = Intent("play_pause").apply {
-                    }
 
+                    val action = if(isPlaying) "play" else "pause"
+
+                    val intent = Intent(action).apply {
+                    }
                     LocalBroadcastManager.getInstance(this@MediaPlayerService)
                         .sendBroadcast(intent)
                 }

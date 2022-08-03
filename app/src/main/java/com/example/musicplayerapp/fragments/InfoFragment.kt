@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.musicplayerapp.MainActivity
 import com.example.musicplayerapp.R
@@ -89,6 +90,18 @@ class InfoFragment : Fragment() {
                 }
             })
         }
+
+        vm.isInSplitMode.observe(viewLifecycleOwner, Observer {
+            if(it){
+                binding.bottomStreams.visibility = View.GONE
+                binding.title.visibility = View.GONE
+            }
+            else{
+                binding.bottomStreams.visibility = View.VISIBLE
+                binding.title.visibility = View.VISIBLE
+            }
+        })
+
         binding.donateBtn.setOnClickListener {
             findNavController().navigate(R.id.donate)
         }

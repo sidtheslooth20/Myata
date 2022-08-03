@@ -232,6 +232,7 @@ class MyataStreamFragment() : Fragment() {
         }
 
         binding.btnPlay.setOnClickListener {
+            vm.ifNeedToListenReciever = true
             (activity as MainActivity).startService(
                 Intent(
                     context,
@@ -241,6 +242,14 @@ class MyataStreamFragment() : Fragment() {
                     it.putExtra("ACTION", "startStop")
                 })
         }
+
+        vm.isInSplitMode.observe(viewLifecycleOwner, Observer {
+            if (vm.isInSplitMode.value!!){
+                binding.photo.visibility = View.GONE
+                binding.logo.visibility = View.GONE
+                binding.bottomStreams.visibility = View.GONE
+            }
+        })
 
         binding.homeBtn.setOnClickListener {
             findNavController().navigate(R.id.mainFragment)
@@ -255,6 +264,12 @@ class MyataStreamFragment() : Fragment() {
 
     override fun onResume() {
         updatePlayer()
+
+        if (!vm.isInSplitMode.value!!){
+            binding.photo.visibility = View.VISIBLE
+            binding.logo.visibility = View.VISIBLE
+            binding.bottomStreams.visibility = View.VISIBLE
+        }
         super.onResume()
     }
 
@@ -267,6 +282,7 @@ class MyataStreamFragment() : Fragment() {
             ).also {
                 it.putExtra("STREAM", vm.currentStreamLive.value)
                 it.putExtra("ACTION", "switch")
+                vm.ifNeedToListenReciever = false
                 when(vm.currentStreamLive.value){
                     "myata"->{
                         if(vm.currentMyataState.value!!.song != null && vm.currentMyataState.value!!.artist != null) {

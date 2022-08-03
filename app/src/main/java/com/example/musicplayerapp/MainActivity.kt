@@ -1,11 +1,14 @@
 package com.example.musicplayerapp
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.musicplayerapp.databinding.ActivityMainBinding
+import com.example.musicplayerapp.service.MediaPlayerService
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,10 +49,28 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
     }
 
+    override fun onResume() {
+        Log.d("MainActivity","Resume")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            viewModel.isInSplitMode.value = this.isInMultiWindowMode
+        }
+        super.onResume()
+    }
+
+    override fun onResumeFragments() {
+        Log.d("MainActivity","ResumeFragment")
+        super.onResumeFragments()
+    }
+
     override fun onRestart() {
         Log.d("MainActivity", "Restart")
         viewModel.isUIActive = true
         viewModel.getStreamJson()
         super.onRestart()
+    }
+
+    override fun onDestroy() {
+        this.stopService(Intent(this, MediaPlayerService::class.java))
+        super.onDestroy()
     }
 }

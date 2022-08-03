@@ -29,21 +29,25 @@ class StreamsFragment : Fragment() {
 
 
         binding.myataStreamBanner.setOnClickListener {
-            vm.currentStreamLive.value = "myata"
+
+            if(vm.currentStreamLive.value != "myata")
+                vm.currentStreamLive.value = "myata"
             findNavController().navigate(R.id.playerFragment, Bundle().apply {
                 putInt(CURRENT_ITEM, 0)
             })
         }
 
         binding.goldStreamBanner.setOnClickListener {
-            vm.currentStreamLive.value = "gold"
+            if(vm.currentStreamLive.value != "gold")
+                vm.currentStreamLive.value = "gold"
             findNavController().navigate(R.id.playerFragment, Bundle().apply {
                 putInt(CURRENT_ITEM, 1)
             })
         }
 
         binding.xtraStreamBanner.setOnClickListener {
-            vm.currentStreamLive.value = "myata_hits"
+            if(vm.currentStreamLive.value != "myata_hits")
+                vm.currentStreamLive.value = "myata_hits"
             findNavController().navigate(R.id.playerFragment, Bundle().apply {
                 putInt(CURRENT_ITEM, 2)
             })

@@ -14,6 +14,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.example.musicplayerapp.MainActivity
 import com.example.musicplayerapp.R
 import com.example.musicplayerapp.StreamsViewModel
@@ -38,19 +39,30 @@ class DonateFragment : Fragment() {
 
         vm = (activity as MainActivity).viewModel
 
-        binding.switchItem.setOnCheckedChangeListener { compoundButton, b ->
+        binding.switchAc.setOnCheckedChangeListener { compoundButton, b ->
             ifAc = !b
         }
+
+        vm.isInSplitMode.observe(viewLifecycleOwner, Observer {
+            if(it){
+                binding.commentText.visibility = View.GONE
+            }
+            else{
+                binding.commentText.visibility = View.VISIBLE
+            }
+        })
 
         binding.sendBtn.setOnClickListener{
 
             if(binding.summ.text!=null){
-                var summ = binding.summ.text.toString().toInt()
-                if(summ <= 15000 && summ >= 100){
-                    binding.form.visibility = View.GONE
-                    binding.webView.visibility = View.VISIBLE
-                    setWebViewClient()
-                    makePay(summ, binding.commentText.text.toString(), if(ifAc) "ac" else "bc")
+                if(!binding.summ.text.isBlank()){
+                    var summ = binding.summ.text.toString().toInt()
+                    if(summ <= 15000 && summ >= 100){
+                        binding.form.visibility = View.GONE
+                        binding.webView.visibility = View.VISIBLE
+                        setWebViewClient()
+                        makePay(summ, binding.commentText.text.toString(), if(ifAc) "ac" else "bc")
+                    }
                 }
             }
         }

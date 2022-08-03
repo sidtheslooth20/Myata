@@ -59,9 +59,4 @@ class PlayerFragment : Fragment() {
         return binding.root
     }
 
-    override fun onDestroy() {
-        (activity as MainActivity).stopService(Intent(context, MediaPlayerService::class.java))
-        super.onDestroy()
-    }
-
 }
