@@ -5,79 +5,98 @@
     android:id="@+id/navgraph"
     app:startDestination="@id/splashFragment">
 
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.musicplayerapp.fragments.SplashFragment"
-        android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        android:label="SplashFragment" >
         <action
             android:id="@+id/action_splashFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/home" />
     </fragment>
     <fragment
-        android:id="@+id/streamsFragment"
-        android:name="com.example.musicplayerapp.fragments.StreamsFragment"
-        android:label="fragment_streams"
-        tools:layout="@layout/fragment_streams" >
+        android:id="@+id/home"
+        android:name="com.example.musicplayerapp.fragments.MainFragment"
+        android:label="MainFragment" >
         <action
-            android:id="@+id/action_streamsFragment_to_playerFragment2"
-            app:destination="@id/playerFragment" />
+            android:id="@+id/action_mainFragment_to_playerFragment"
+            app:destination="@id/player" />
+        <action
+            android:id="@+id/action_mainFragment_to_infoFragment"
+            app:destination="@id/info" />
+        <action
+            android:id="@+id/action_mainFragment_to_donateFragment"
+            app:destination="@id/donate" />
+        <action
+            android:id="@+id/action_mainFragment_to_streamsFragment"
+            app:destination="@id/streams" />
     </fragment>
     <fragment
-        android:id="@+id/player_myata"
-        android:name="com.example.musicplayerapp.fragments.MyataStreamFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_myata_stream">
+        android:id="@+id/player"
+        android:name="com.example.musicplayerapp.fragments.PlayerFragment"
+        android:label="PlayerFragment" >
         <action
-            android:id="@+id/action_music_to_streamsFragment"
-            app:destination="@id/streamsFragment" />
+            android:id="@+id/action_playerFragment_to_streamsFragment"
+            app:destination="@id/streams" />
         <action
-            android:id="@+id/action_player_myata_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_playerFragment_to_mainFragment"
+            app:destination="@id/home" />
+        <action
+            android:id="@+id/action_playerFragment_to_infoFragment"
+            app:destination="@id/info" />
+        <action
+            android:id="@+id/action_playerFragment_to_donateFragment"
+            app:destination="@id/donate" />
+    </fragment>
+    <fragment
+        android:id="@+id/info"
+        android:name="com.example.musicplayerapp.fragments.InfoFragment"
+        android:label="InfoFragment" >
+        <action
+            android:id="@+id/action_infoFragment_to_playerFragment"
+            app:destination="@id/player" />
+        <action
+            android:id="@+id/action_infoFragment_to_mainFragment"
+            app:destination="@id/home" />
+        <action
+            android:id="@+id/action_infoFragment_to_streamsFragment"
+            app:destination="@id/streams" />
+        <action
+            android:id="@+id/action_infoFragment_to_donateFragment"
+            app:destination="@id/donate" />
     </fragment>
     <fragment
         android:id="@+id/donate"
         android:name="com.example.musicplayerapp.fragments.DonateFragment"
-        android:label="fragment_donate"
-        tools:layout="@layout/fragment_donate" >
+        android:label="DonateFragment" >
         <action
-            android:id="@+id/action_donate_to_playerFragment2"
-            app:destination="@id/playerFragment" />
+            android:id="@+id/action_donateFragment_to_playerFragment"
+            app:destination="@id/player" />
+        <action
+            android:id="@+id/action_donateFragment_to_streamsFragment"
+            app:destination="@id/streams" />
+        <action
+            android:id="@+id/action_donateFragment_to_infoFragment"
+            app:destination="@id/info" />
+        <action
+            android:id="@+id/action_donateFragment_to_mainFragment"
+            app:destination="@id/home" />
     </fragment>
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.musicplayerapp.fragments.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        android:id="@+id/streams"
+        android:name="com.example.musicplayerapp.fragments.StreamsFragment"
+        android:label="StreamsFragment" >
         <action
-            android:id="@+id/action_mainFragment_to_streamsFragment2"
-            app:destination="@id/streamsFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_donate"
+            android:id="@+id/action_streamsFragment_to_donateFragment"
             app:destination="@id/donate" />
         <action
-            android:id="@+id/action_mainFragment_to_infoFragment"
-            app:destination="@id/infoFragment" />
+            android:id="@+id/action_streamsFragment_to_playerFragment"
+            app:destination="@id/player" />
         <action
-            android:id="@+id/action_mainFragment_to_playerFragment2"
-            app:destination="@id/playerFragment" />
+            android:id="@+id/action_streamsFragment_to_mainFragment"
+            app:destination="@id/home" />
+        <action
+            android:id="@+id/action_streamsFragment_to_infoFragment"
+            app:destination="@id/info" />
     </fragment>
-    <fragment
-        android:id="@+id/infoFragment"
-        android:name="com.example.musicplayerapp.fragments.InfoFragment"
-        android:label="InfoFragment" >
-        <action
-            android:id="@+id/action_infoFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <action
-            android:id="@+id/action_infoFragment_to_donate"
-            app:destination="@id/donate" />
-        <action
-            android:id="@+id/action_infoFragment_to_playerFragment2"
-            app:destination="@id/playerFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/playerFragment"
-        android:name="com.example.musicplayerapp.fragments.PlayerFragment"
-        android:label="PlayerFragment" />
 </navigation>

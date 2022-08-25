@@ -8,10 +8,10 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/flFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,11 +24,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:defaultNavHost="true"
-                app:layout_constraintBottom_toBottomOf="@+id/flFragment"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                app:navGraph="@navigation/navgraph" />
+                app:navGraph="@navigation/navgraph"
+                android:paddingBottom="50dp"
+                />
 
-        </FrameLayout>
+            <LinearLayout
+                android:layout_height="50dp"
+                android:layout_width="match_parent"
+                android:background="#00000000"
+                android:id="@+id/bottomNavView"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+                <ImageView
+                    android:id="@+id/home_btn"
+                    android:layout_weight="1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/home_btn" />
+
+                <ImageView
+                    android:id="@+id/player_btn"
+                    android:layout_weight="1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/player_btn" />
+
+                <ImageView
+                    android:id="@+id/info_btn"
+                    android:layout_weight="1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/info_btn" />
+
+                <ImageView
+                    android:id="@+id/donate_btn"
+                    android:layout_weight="1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/donate_btn" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

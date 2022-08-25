@@ -5,7 +5,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,11 +17,10 @@ import com.example.musicplayerapp.MainActivity
 import com.example.musicplayerapp.R
 import com.example.musicplayerapp.StreamsViewModel
 import com.example.musicplayerapp.databinding.FragmentSplashBinding
-import kotlinx.coroutines.delay
-import okhttp3.internal.wait
 
 
-class SplashFragment : Fragment() {
+class
+SplashFragment : Fragment() {
 
     lateinit var vm: StreamsViewModel
 

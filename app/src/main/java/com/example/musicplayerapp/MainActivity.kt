@@ -1,12 +1,20 @@
 package com.example.musicplayerapp
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.media3.ui.PlayerNotificationManager
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.example.musicplayerapp.databinding.ActivityMainBinding
 import com.example.musicplayerapp.service.MediaPlayerService
 
@@ -34,6 +42,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         super.onCreate(savedInstanceState)
+
+        val receiver = closeBroadcastReceiver()
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, IntentFilter("Dismiss"))
 
         val viewModelProviderFactory = StreamsViewModelFactory(application)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(StreamsViewModel ::class.java)
@@ -72,5 +83,21 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         this.stopService(Intent(this, MediaPlayerService::class.java))
         super.onDestroy()
+        finishAffinity()
+
+        this@MainActivity.finish()
+        System.exit(0)
+    }
+
+    inner class closeBroadcastReceiver : BroadcastReceiver() {
+
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent != null) {
+                if (intent.action == "Dismiss") {
+                    Log.e("MAINACTIVITY", "Destroy")
+                    onDestroy()
+                }
+            }
+        }
     }
 }

@@ -43,11 +43,6 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
         isPlaying.value = false
         isInSplitMode.value = false
         val intent = Intent(context, MediaPlayerService::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(intent)
-        } else {
-            context.startService(intent)
-        }
 
         currentStreamLive.value = "myata"
 
@@ -117,7 +112,7 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
     suspend fun parseJson() = withContext(Dispatchers.IO){
 
         val client = OkHttpClient.Builder().build()
-        while (isUIActive) {
+        while (true) {
             val gson = Gson()
             try{
                 val request = Request.Builder()
@@ -131,21 +126,41 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
 
                     val streamMyataInfo = streamInfo.get("/myata") as Map<String, String?>
                     var songArtist = streamMyataInfo.get("now_playing")?.split("- ")
-                    if(currentMyataState.value?.song != songArtist?.get(1)) {
-                        try {
-                            val doc: org.jsoup.nodes.Document = Jsoup.connect(
-                                songArtist?.let { formUrl(it) }
-                            ).get()
 
-                            val elements: Elements = doc.select("ul[class=image-list]")
-                            currentMyataState.postValue(
-                                PlayerState(
-                                    songArtist?.get(0), songArtist?.get(1),
+                    if(currentMyataState.value?.song != songArtist?.get(1)) {
+                        if(currentStreamLive.value == "myata"){
+                            if(currentMyataState.value?.song != null){
+                                context.startService(Intent(
+                                    context,
+                                    MediaPlayerService::class.java
+                                ).also {
+                                    it.putExtra("ACTION", "switch_track")
+                                    it.putExtra("SONG", songArtist?.get(1))
+                                    it.putExtra("ARTIST", songArtist?.get(0))
+                                })
+
+                                currentMyataState.postValue(
+                                    PlayerState(
+                                        songArtist?.get(0), songArtist?.get(1), null)
+                                )
+                            }
+                        }
+                        try {
+                            if(isUIActive){
+                                val doc: org.jsoup.nodes.Document = Jsoup.connect(
+                                    songArtist?.let { formUrl(it) }
+                                ).get()
+
+                                val elements: Elements = doc.select("ul[class=image-list]")
+                                currentMyataState.postValue(
+                                    PlayerState(
+                                        songArtist?.get(0), songArtist?.get(1),
                                         elements.select("a[class=image-list-item]")
                                             .select("img").attr("src"))
-                            )
-                            Log.d("IMG", elements.select("a[class=image-list-item]")
-                                .select("img").attr("src"))
+                                )
+                                Log.d("IMG", elements.select("a[class=image-list-item]")
+                                    .select("img").attr("src"))
+                            }
                         }
                         catch (ex: IOException){
                             currentMyataState.postValue(
@@ -159,21 +174,40 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                     val streamGoldInfo = streamInfo.get("/gold") as Map<String, String?>
                     songArtist = streamGoldInfo.get("now_playing")?.split("- ")
                     if(currentGoldState.value?.song != songArtist?.get(1)) {
-                        try {
-                            val doc: org.jsoup.nodes.Document = Jsoup.connect(
-                                songArtist?.let { formUrl(it) }
-                            ).get()
+                        if(currentStreamLive.value == "gold"){
+                            if(currentGoldState.value?.song != null){
+                                context.startService(Intent(
+                                    context,
+                                    MediaPlayerService::class.java
+                                ).also {
+                                    it.putExtra("ACTION", "switch_track")
+                                    it.putExtra("SONG", songArtist?.get(1))
+                                    it.putExtra("ARTIST", songArtist?.get(0))
+                                })
 
-                            val elements: Elements = doc.select("ul[class=image-list]")
-                            currentGoldState.postValue(
-                                PlayerState(
-                                    songArtist?.get(0), songArtist?.get(1),
+                                currentGoldState.postValue(
+                                    PlayerState(
+                                        songArtist?.get(0), songArtist?.get(1), null)
+                                )
+                            }
+                        }
+                        try {
+                            if(isUIActive){
+                                val doc: org.jsoup.nodes.Document = Jsoup.connect(
+                                    songArtist?.let { formUrl(it) }
+                                ).get()
+
+                                val elements: Elements = doc.select("ul[class=image-list]")
+                                currentGoldState.postValue(
+                                    PlayerState(
+                                        songArtist?.get(0), songArtist?.get(1),
                                         elements.select("a[class=image-list-item]")
                                             .select("img").attr("src")
+                                    )
                                 )
-                            )
-                            Log.d("IMG", elements.select("a[class=image-list-item]")
-                                .select("img").attr("src"))
+                                Log.d("IMG", elements.select("a[class=image-list-item]")
+                                    .select("img").attr("src"))
+                            }
                         }
                         catch (ex: IOException){
                             currentGoldState.postValue(
@@ -187,21 +221,40 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                     val streamXtraInfo = streamInfo.get("/myata_hits") as Map<String, String?>
                     songArtist = streamXtraInfo.get("now_playing")?.split("- ")
                     if(currentXtraState.value?.song != songArtist?.get(1)) {
-                        try {
-                            val doc: org.jsoup.nodes.Document = Jsoup.connect(
-                                songArtist?.let { formUrl(it) }
-                            ).get()
+                        if(currentStreamLive.value == "myata_hits"){
+                            if(currentXtraState.value?.song != null){
+                                context.startService(Intent(
+                                    context,
+                                    MediaPlayerService::class.java
+                                ).also {
+                                    it.putExtra("ACTION", "switch_track")
+                                    it.putExtra("SONG", songArtist?.get(1))
+                                    it.putExtra("ARTIST", songArtist?.get(0))
+                                })
 
-                            val elements: Elements = doc.select("ul[class=image-list]")
-                            currentXtraState.postValue(
-                                PlayerState(
-                                    songArtist?.get(0), songArtist?.get(1),
+                                currentXtraState.postValue(
+                                    PlayerState(
+                                        songArtist?.get(0), songArtist?.get(1), null)
+                                )
+                            }
+                        }
+                        try {
+                            if(isUIActive){
+                                val doc: org.jsoup.nodes.Document = Jsoup.connect(
+                                    songArtist?.let { formUrl(it) }
+                                ).get()
+
+                                val elements: Elements = doc.select("ul[class=image-list]")
+                                currentXtraState.postValue(
+                                    PlayerState(
+                                        songArtist?.get(0), songArtist?.get(1),
                                         elements.select("a[class=image-list-item]")
                                             .select("img").attr("src")
+                                    )
                                 )
-                            )
-                            Log.d("IMG", elements.select("a[class=image-list-item]")
-                                .select("img").attr("src"))
+                                Log.d("IMG", elements.select("a[class=image-list-item]")
+                                    .select("img").attr("src"))
+                            }
                         }
                         catch (ex: IOException){
                             currentXtraState.postValue(

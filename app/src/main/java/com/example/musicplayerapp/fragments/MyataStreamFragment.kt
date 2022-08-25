@@ -3,12 +3,14 @@ package com.example.musicplayerapp.fragments
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import com.example.musicplayerapp.MainActivity
 import com.example.musicplayerapp.R
@@ -60,172 +62,24 @@ class MyataStreamFragment() : Fragment() {
             "myata"->{
                 binding.constraintLayout.setBackgroundResource(R.drawable.myata_bg)
                 vm.currentMyataState.observe(viewLifecycleOwner, Observer {
-                    binding.logo.setImageResource(R.drawable.logo)
                     if (it != null) {
-                        if (it.artist != null) {
-                            if(!it.artist!!.isBlank()) {
-                                if (it.img != null) {
-                                    if(!it.img!!.isBlank()){
-                                        Picasso.get()
-                                            .load(Uri.parse(it.img!!.replace("avatar170", "avatar770")))
-                                            .fit()
-                                            .transform(CropCircleTransformation())
-                                            .centerCrop().into(binding.photo)
-                                    }
-                                    else{
-                                        binding.logo.setImageResource(R.drawable.logo)
-                                    }
-                                } else {
-                                    binding.logo.setImageResource(R.drawable.logo)
-                                }
-
-
-                                binding.mainSong.text = vm.currentMyataState.value!!.song
-                                binding.mainAuthor.text = vm.currentMyataState.value!!.artist
-                                (activity as MainActivity).startService(
-                                    Intent(
-                                        context,
-                                        MediaPlayerService::class.java
-                                    ).also {
-                                        it.putExtra("ACTION", "switch_track")
-                                        if (vm.currentMyataState.value!!.song != null && vm.currentMyataState.value!!.artist != null) {
-                                            it.putExtra("SONG", vm.currentMyataState.value!!.song)
-                                            it.putExtra(
-                                                "ARTIST",
-                                                vm.currentMyataState.value!!.artist
-                                            )
-                                        } else {
-                                            it.putExtra("SONG", "YOU ARE LISTENING")
-                                            it.putExtra("ARTIST", "RADIO MYATA")
-                                        }
-                                    })
-                            }
-                        } else{
-                            binding.mainAuthor.text = "YOU ARE LISTENING"
-                            binding.mainSong.text = "RADIO MYATA"
-                            binding.logo.setImageResource(R.drawable.logo)
-                        }
-                    }
-                    else{
-                        binding.mainAuthor.text = "YOU ARE LISTENING"
-                        binding.mainSong.text = "RADIO MYATA"
-                        binding.logo.setImageResource(R.drawable.logo)
+                        updateUI(it)
                     }
                 })
             }
             "gold"-> {
                 binding.constraintLayout.setBackgroundResource(R.drawable.gold_bg)
                 vm.currentGoldState.observe(viewLifecycleOwner, Observer {
-                    binding.logo.setImageResource(R.drawable.logo)
                     if (it != null) {
-                        if(it.artist!=null) {
-                            if(!it.artist!!.isBlank()) {
-                                if (it.img != null) {
-                                    if(!it.img!!.isBlank()){
-                                        Picasso.get()
-                                            .load(Uri.parse(it.img!!.replace("avatar170", "avatar770")))
-                                            .transform(CropCircleTransformation())
-                                            .fit()
-                                            .centerCrop().into(binding.photo)
-                                        binding.logo.clearAnimation()
-                                    }
-                                    else{
-                                        binding.logo.setImageResource(R.drawable.logo)
-                                    }
-                                } else {
-                                    binding.logo.setImageResource(R.drawable.logo)
-
-                                }
-
-                                binding.mainSong.text = vm.currentGoldState.value!!.song
-                                binding.mainAuthor.text = vm.currentGoldState.value!!.artist
-                                (activity as MainActivity).startService(
-                                    Intent(
-                                        context,
-                                        MediaPlayerService::class.java
-                                    ).also {
-                                        it.putExtra("ACTION", "switch_track")
-                                        if (vm.currentGoldState.value!!.song != null && vm.currentGoldState.value!!.artist != null) {
-                                            it.putExtra("SONG", vm.currentGoldState.value!!.song)
-                                            it.putExtra(
-                                                "ARTIST",
-                                                vm.currentGoldState.value!!.artist
-                                            )
-                                        } else {
-                                            it.putExtra("SONG", "YOU ARE LISTENING")
-                                            it.putExtra("ARTIST", "RADIO MYATA")
-                                        }
-                                    })
-                            }
-                            else{
-                                binding.mainAuthor.text = "YOU ARE LISTENING"
-                                binding.mainSong.text = "RADIO MYATA"
-                                binding.logo.setImageResource(R.drawable.logo)
-                            }
-                        }
-                    }
-                    else {
-                        binding.mainAuthor.text = "YOU ARE LISTENING"
-                        binding.mainSong.text = "RADIO MYATA"
-                        binding.logo.setImageResource(R.drawable.logo)
+                        updateUI(it)
                     }
                 })
             }
             "myata_hits"->{
                 binding.constraintLayout.setBackgroundResource(R.drawable.xtra_bg)
                 vm.currentXtraState.observe(viewLifecycleOwner, Observer {
-                    binding.logo.setImageResource(R.drawable.logo)
                     if (it != null) {
-                        if(it.artist!=null) {
-                            if(!it.artist!!.isBlank()) {
-                                if (it.img != null) {
-                                    if (!it.img!!.isBlank()){
-                                        Picasso.get()
-                                            .load(Uri.parse(it.img!!.replace("avatar170", "avatar770")))
-                                            .transform(CropCircleTransformation())
-                                            .fit()
-                                            .centerCrop().into(binding.photo)
-                                        binding.logo.clearAnimation()
-                                    }
-                                    else{
-                                        binding.logo.setImageResource(R.drawable.logo)
-                                    }
-                                } else {
-                                    binding.logo.setImageResource(R.drawable.logo)
-                                }
-
-                                binding.mainSong.text = vm.currentXtraState.value!!.song
-                                binding.mainAuthor.text = vm.currentXtraState.value!!.artist
-                                (activity as MainActivity).startService(
-                                    Intent(
-                                        context,
-                                        MediaPlayerService::class.java
-                                    ).also {
-                                        it.putExtra("ACTION", "switch_track")
-                                        if (vm.currentXtraState.value!!.song != null && vm.currentXtraState.value!!.artist != null) {
-                                            it.putExtra("SONG", vm.currentXtraState.value!!.song)
-                                            it.putExtra(
-                                                "ARTIST",
-                                                vm.currentXtraState.value!!.artist
-                                            )
-                                        } else {
-                                            it.putExtra("SONG", "YOU ARE LISTENING")
-                                            it.putExtra("ARTIST", "RADIO MYATA")
-                                        }
-                                    })
-                            }
-                            else{
-                                binding.mainAuthor.text = "YOU ARE LISTENING"
-                                binding.mainSong.text = "RADIO MYATA"
-                                binding.logo.setImageResource(R.drawable.logo)
-                            }
-                        }
-
-                    }
-                    else{
-                        binding.mainAuthor.text = "YOU ARE LISTENING"
-                        binding.mainSong.text = "RADIO MYATA"
-                        binding.logo.setImageResource(R.drawable.logo)
+                        updateUI(it)
                     }
                 })
             }
@@ -247,16 +101,41 @@ class MyataStreamFragment() : Fragment() {
             if (vm.isInSplitMode.value!!){
                 binding.photo.visibility = View.GONE
                 binding.logo.visibility = View.GONE
-                binding.bottomStreams.visibility = View.GONE
+                (activity as MainActivity).binding.bottomNavView.visibility = View.GONE
             }
         })
 
-        binding.homeBtn.setOnClickListener {
-            findNavController().navigate(R.id.mainFragment)
-        }
+        vm.currentStreamLive.observe(viewLifecycleOwner, Observer {
+            var intent = Intent()
+            intent.setAction("switch_track")
+            when(it){
+                "myata"->{
+                    intent.putExtra("artist",vm.currentMyataState.value?.artist)
+                    intent.putExtra("song",vm.currentMyataState.value?.song)
+                }
+                "gold"->{
+                    intent.putExtra("artist",vm.currentGoldState.value?.artist)
+                    intent.putExtra("song",vm.currentGoldState.value?.song)
+                }
+                "myata_hits"->{
+                    intent.putExtra("artist",vm.currentXtraState.value?.artist)
+                    intent.putExtra("song",vm.currentXtraState.value?.song)
+                }
+            }
+            context?.let { it1 ->
+                LocalBroadcastManager.getInstance(it1)
+                    .sendBroadcast(intent).apply {}
+            }
+        })
 
-        binding.streamsBtn.setOnClickListener {
-            findNavController().navigate(R.id.streamsFragment)
+        (activity as MainActivity).binding.homeBtn.setOnClickListener {
+            findNavController().navigate(R.id.home)
+        }
+        (activity as MainActivity).binding.infoBtn.setOnClickListener {
+            findNavController().navigate(R.id.info)
+        }
+        (activity as MainActivity).binding.donateBtn.setOnClickListener {
+            findNavController().navigate(R.id.donate)
         }
 
         return binding.root
@@ -265,16 +144,29 @@ class MyataStreamFragment() : Fragment() {
     override fun onResume() {
         updatePlayer()
 
+        when(stream){
+            "myata"->{
+                vm.currentMyataState.value?.let { updateUI(it) }
+            }
+            "gold"-> {
+                vm.currentGoldState.value?.let { updateUI(it) }
+            }
+            "myata_hits"->{
+                vm.currentXtraState.value?.let { updateUI(it) }
+            }
+        }
+
         if (!vm.isInSplitMode.value!!){
             binding.photo.visibility = View.VISIBLE
             binding.logo.visibility = View.VISIBLE
-            binding.bottomStreams.visibility = View.VISIBLE
+            (activity as MainActivity).binding.bottomNavView.visibility = View.VISIBLE
         }
+
+        Log.d("PLAYER", "resume")
         super.onResume()
     }
 
     fun updatePlayer(){
-
         (activity as MainActivity).startService(
             Intent(
                 context,
@@ -316,5 +208,42 @@ class MyataStreamFragment() : Fragment() {
                     }
                 }
             })
+    }
+
+    fun updateUI(it: StreamsViewModel.PlayerState){
+        binding.logo.setImageResource(R.drawable.logo)
+        if (it != null) {
+            if(it.artist!=null) {
+                if(!it.artist!!.isBlank()) {
+                    if (it.img != null) {
+                        if(!it.img!!.isBlank()){
+                            Picasso.get()
+                                .load(Uri.parse(it.img!!.replace("avatar170", "avatar770")))
+                                .transform(CropCircleTransformation())
+                                .fit()
+                                .centerCrop().into(binding.photo)
+                        }
+                        else{
+                            binding.photo.setImageResource(R.drawable.logo)
+                        }
+                    } else {
+                        binding.photo.setImageResource(R.drawable.logo)
+                    }
+
+                    binding.mainSong.text = it.song
+                    binding.mainAuthor.text = it.artist
+                }
+                else{
+                    binding.mainAuthor.text = "YOU ARE LISTENING"
+                    binding.mainSong.text = "RADIO MYATA"
+                    binding.photo.setImageResource(R.drawable.logo)
+                }
+            }
+        }
+        else {
+            binding.mainAuthor.text = "YOU ARE LISTENING"
+            binding.mainSong.text = "RADIO MYATA"
+            binding.photo.setImageResource(R.drawable.logo)
+        }
     }
 }

@@ -15,6 +15,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.musicplayerapp.MainActivity
 import com.example.musicplayerapp.R
 import com.example.musicplayerapp.StreamsViewModel
@@ -65,6 +66,23 @@ class DonateFragment : Fragment() {
                     }
                 }
             }
+        }
+
+        (activity as MainActivity).binding.playerBtn.setOnClickListener {
+            findNavController().navigate(R.id.player, Bundle().apply {
+                when(vm.currentStreamLive.value){
+                    "myata"->putInt(CURRENT_ITEM, 0)
+                    "gold"->putInt(CURRENT_ITEM, 1)
+                    "myata_hits"->putInt(CURRENT_ITEM, 2)
+                }
+            })
+        }
+
+        (activity as MainActivity).binding.infoBtn.setOnClickListener {
+            findNavController().navigate(R.id.info)
+        }
+        (activity as MainActivity).binding.homeBtn.setOnClickListener {
+            findNavController().navigate(R.id.home)
         }
 
         binding.summ.addTextChangedListener(object : TextWatcher {

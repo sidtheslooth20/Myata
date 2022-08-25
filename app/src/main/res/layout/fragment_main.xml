@@ -61,38 +61,13 @@
             android:layout_weight="1" />
 
         <androidx.recyclerview.widget.RecyclerView
-
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="6"
             tools:listitem="@layout/rw_playlist_item"
-            android:id="@+id/playlists">
-
+            android:id="@+id/playlists"
+            android:layout_marginBottom="55dp">
         </androidx.recyclerview.widget.RecyclerView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="30dp"
-            android:id="@+id/bottomNav"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_height="40dp"
-                android:layout_width="40dp"
-                android:src="@drawable/info_btn"
-                android:id="@+id/info_btn"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:id="@+id/donate_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/donate_btn"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
 
     </LinearLayout>
 </layout>

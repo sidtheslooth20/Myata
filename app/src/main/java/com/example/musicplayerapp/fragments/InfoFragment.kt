@@ -81,8 +81,22 @@ class InfoFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.playerBtn.setOnClickListener {
-            findNavController().navigate(R.id.playerFragment, Bundle().apply {
+
+        vm.isInSplitMode.observe(viewLifecycleOwner, Observer {
+            if(it){
+//                binding.bottomStreams.visibility = View.GONE
+                (activity as MainActivity).binding.bottomNavView.visibility = View.GONE
+                binding.title.visibility = View.GONE
+            }
+            else{
+//                binding.bottomStreams.visibility = View.VISIBLE
+                (activity as MainActivity).binding.bottomNavView.visibility = View.VISIBLE
+                binding.title.visibility = View.VISIBLE
+            }
+        })
+
+        (activity as MainActivity).binding.playerBtn.setOnClickListener {
+            findNavController().navigate(R.id.player, Bundle().apply {
                 when(vm.currentStreamLive.value){
                     "myata"->putInt(CURRENT_ITEM, 0)
                     "gold"->putInt(CURRENT_ITEM, 1)
@@ -91,22 +105,11 @@ class InfoFragment : Fragment() {
             })
         }
 
-        vm.isInSplitMode.observe(viewLifecycleOwner, Observer {
-            if(it){
-                binding.bottomStreams.visibility = View.GONE
-                binding.title.visibility = View.GONE
-            }
-            else{
-                binding.bottomStreams.visibility = View.VISIBLE
-                binding.title.visibility = View.VISIBLE
-            }
-        })
-
-        binding.donateBtn.setOnClickListener {
+        (activity as MainActivity).binding.donateBtn.setOnClickListener {
             findNavController().navigate(R.id.donate)
         }
-        binding.homeBtn.setOnClickListener {
-            findNavController().navigate(R.id.mainFragment)
+        (activity as MainActivity).binding.homeBtn.setOnClickListener {
+            findNavController().navigate(R.id.home)
         }
 
         return binding.root

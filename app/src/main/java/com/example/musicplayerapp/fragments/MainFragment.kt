@@ -30,6 +30,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (activity as MainActivity).binding.bottomNavView.visibility = View.VISIBLE
         vm = (activity as MainActivity).viewModel
 
         binding = DataBindingUtil.inflate(
@@ -39,27 +40,37 @@ class MainFragment : Fragment() {
         binding.playlists.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.playlists.adapter = vm.playlistList.value?.let { PlaylistAdapter(it, { position -> onItemClick(position)}) }
 
-        binding.infoBtn.setOnClickListener {
-            findNavController().navigate(R.id.infoFragment)
+        (activity as MainActivity).binding.infoBtn.setOnClickListener {
+            findNavController().navigate(R.id.info)
+        }
+
+        (activity as MainActivity).binding.playerBtn.setOnClickListener {
+            findNavController().navigate(R.id.player, Bundle().apply {
+                when(vm.currentStreamLive.value){
+                    "myata"->putInt(CURRENT_ITEM, 0)
+                    "gold"->putInt(CURRENT_ITEM, 1)
+                    "myata_hits"->putInt(CURRENT_ITEM, 2)
+                }
+            })
         }
 
         binding.myataStreamBanner.setOnClickListener {
             vm.currentStreamLive.value = "myata"
-            findNavController().navigate(R.id.playerFragment, Bundle().apply {
+            findNavController().navigate(R.id.player, Bundle().apply {
                 putInt(CURRENT_ITEM, 0)
             })
         }
 
         binding.goldStreamBanner.setOnClickListener {
             vm.currentStreamLive.value = "gold"
-            findNavController().navigate(R.id.playerFragment, Bundle().apply {
+            findNavController().navigate(R.id.player, Bundle().apply {
                 putInt(CURRENT_ITEM, 1)
             })
         }
 
         binding.xtraStreamBanner.setOnClickListener {
             vm.currentStreamLive.value = "myata_hits"
-            findNavController().navigate(R.id.playerFragment, Bundle().apply {
+            findNavController().navigate(R.id.player, Bundle().apply {
                 putInt(CURRENT_ITEM, 2)
             })
         }
@@ -67,16 +78,16 @@ class MainFragment : Fragment() {
         vm.isInSplitMode.observe(viewLifecycleOwner, Observer {
             if(it){
                 binding.playlists.visibility = View.GONE
-                binding.bottomNav.visibility = View.GONE
+                (activity as MainActivity).binding.bottomNavView.visibility = View.GONE
+//                binding.bottomNav.visibility = View.GONE
                 binding.playlistString.visibility = View.GONE
             }
         })
 
-        binding.donateBtn.setOnClickListener {
+        (activity as MainActivity).binding.donateBtn.setOnClickListener {
             findNavController().navigate(R.id.donate)
         }
 
-        // Inflate the layout for this fragment
         return binding.root
     }
 
@@ -84,7 +95,8 @@ class MainFragment : Fragment() {
 
         if (!vm.isInSplitMode.value!!){
             binding.playlists.visibility = View.VISIBLE
-            binding.bottomNav.visibility = View.VISIBLE
+            (activity as MainActivity).binding.bottomNavView.visibility = View.VISIBLE
+//            binding.bottomNav.visibility = View.VISIBLE
             binding.playlistString.visibility = View.VISIBLE
         }
 
