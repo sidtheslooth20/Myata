@@ -32,6 +32,8 @@ class InfoFragment : Fragment() {
 
         vm = (activity as MainActivity).viewModel
 
+        vm.currentFragmentLiveData.value = "info"
+
         binding.yandex.setOnClickListener{
             val intent = Intent(Intent.ACTION_VIEW)
             intent.addCategory(Intent.CATEGORY_BROWSABLE)
@@ -113,5 +115,10 @@ class InfoFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onResume() {
+        vm.currentFragmentLiveData.value = "info"
+        super.onResume()
     }
 }

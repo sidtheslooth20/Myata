@@ -33,6 +33,18 @@ class MainFragment : Fragment() {
         (activity as MainActivity).binding.bottomNavView.visibility = View.VISIBLE
         vm = (activity as MainActivity).viewModel
 
+        vm.currentFragmentLiveData.value = "main"
+
+        if(vm.ifNeedToNavigateStraightToPlayer){
+            findNavController().navigate(R.id.player, Bundle().apply {
+                when(vm.currentStreamLive.value){
+                    "myata"->putInt(CURRENT_ITEM, 0)
+                    "gold"->putInt(CURRENT_ITEM, 1)
+                    "myata_hits"->putInt(CURRENT_ITEM, 2)
+                }
+            })
+        }
+
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_main, container, false
@@ -92,6 +104,8 @@ class MainFragment : Fragment() {
     }
 
     override fun onResume() {
+
+        vm.currentFragmentLiveData.value = "main"
 
         if (!vm.isInSplitMode.value!!){
             binding.playlists.visibility = View.VISIBLE

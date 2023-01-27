@@ -40,6 +40,8 @@ class DonateFragment : Fragment() {
 
         vm = (activity as MainActivity).viewModel
 
+        vm.currentFragmentLiveData.value = "donate"
+
         binding.switchAc.setOnCheckedChangeListener { compoundButton, b ->
             ifAc = !b
         }
@@ -149,6 +151,11 @@ class DonateFragment : Fragment() {
                 super.onPageFinished(view, url)
             }
         }
+    }
+
+    override fun onResume() {
+        vm.currentFragmentLiveData.value = "donate"
+        super.onResume()
     }
 
     override fun onDestroy() {

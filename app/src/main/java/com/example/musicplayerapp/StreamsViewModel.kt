@@ -1,5 +1,6 @@
 package com.example.musicplayerapp
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -33,8 +34,13 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
     var isInSplitMode = MutableLiveData<Boolean>()
     var playlistList = MutableLiveData<MutableList<YandexPlaylist>>()
     var currentStreamLive = MutableLiveData<String?>()
+    var currentFragmentLiveData = MutableLiveData<String>()
+    @SuppressLint("StaticFieldLeak")
     private val context = getApplication<Application>().applicationContext
     var isUIActive = true
+
+    //problem why we need this is service cannot launch fragment, it can only recreate activity
+    var ifNeedToNavigateStraightToPlayer = false
     //To avoid reaction on swich stream pause
     var ifNeedToListenReciever = true
 
@@ -42,8 +48,6 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
     init {
         isPlaying.value = false
         isInSplitMode.value = false
-        val intent = Intent(context, MediaPlayerService::class.java)
-
         currentStreamLive.value = "myata"
 
         val receiver1 = PlayPauseBroadcastReceiver()

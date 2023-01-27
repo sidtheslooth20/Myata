@@ -28,9 +28,10 @@
                 android:paddingBottom="50dp"
                 />
 
-            <LinearLayout
-                android:layout_height="50dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_height="40dp"
                 android:layout_width="match_parent"
+                android:layout_marginBottom="10dp"
                 android:background="#00000000"
                 android:id="@+id/bottomNavView"
                 android:visibility="gone"
@@ -40,33 +41,41 @@
                 >
                 <ImageView
                     android:id="@+id/home_btn"
-                    android:layout_weight="1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/player_btn"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:src="@drawable/home_btn" />
 
                 <ImageView
                     android:id="@+id/player_btn"
-                    android:layout_weight="1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    app:layout_constraintStart_toEndOf="@id/home_btn"
+                    app:layout_constraintEnd_toStartOf="@id/donate_btn"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:src="@drawable/player_btn" />
 
                 <ImageView
-                    android:id="@+id/info_btn"
-                    android:layout_weight="1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/info_btn" />
-
-                <ImageView
                     android:id="@+id/donate_btn"
-                    android:layout_weight="1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    app:layout_constraintStart_toEndOf="@id/player_btn"
+                    app:layout_constraintEnd_toStartOf="@id/info_btn"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:src="@drawable/donate_btn" />
 
-            </LinearLayout>
+                <ImageView
+                    android:id="@+id/info_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintStart_toEndOf="@id/donate_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/info_btn" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

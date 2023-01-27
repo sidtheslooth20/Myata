@@ -1,6 +1,7 @@
 package com.example.musicplayerapp.service
 
 import android.app.*
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -13,14 +14,15 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerNotificationManager
+import com.example.musicplayerapp.MainActivity
 
 
 class MediaPlayerService(): Service(){
 
     private lateinit var exoPlayer: ExoPlayer
-    val myataItem = MediaItem.fromUri("https://radio-node-6.dline-media.com/myata")
-    val xtraItem = MediaItem.fromUri("https://radio-node-6.dline-media.com/myata_hits")
-    val goldItem = MediaItem.fromUri("https://radio-node-6.dline-media.com/gold")
+    val myataItem = MediaItem.fromUri("https://radio.dline-media.com/myata")
+    val xtraItem = MediaItem.fromUri("https://radio.dline-media.com/myata_hits")
+    val goldItem = MediaItem.fromUri("https://radio.dline-media.com/gold")
 
     var playerNotificationManager: PlayerNotificationManager? = null
     var song: String = ""
@@ -35,8 +37,15 @@ class MediaPlayerService(): Service(){
         }
 
         override fun createCurrentContentIntent(player: Player): PendingIntent? {
-            return null
+            val intent = Intent(this@MediaPlayerService, MainActivity::class.java)
+            intent.action = stream
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                PendingIntent.getActivity(this@MediaPlayerService,0,intent,PendingIntent.FLAG_MUTABLE)
+            } else {
+                PendingIntent.getActivity(this@MediaPlayerService,0,intent,0)
+            }
         }
+
 
         override fun getCurrentContentText(player: Player): CharSequence? {
             return song

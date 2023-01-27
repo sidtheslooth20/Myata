@@ -32,7 +32,7 @@ class PlaylistAdapter(private val playlists: List<StreamsViewModel.YandexPlaylis
     }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
-        Picasso.get().load(playlists[position].img).transform(RoundedCornersTransformation(45,5)).resize(400,400).centerCrop().into(holder.iv)
+        Picasso.get().load(playlists[position].img).transform(RoundedCornersTransformation(45,0)).resize(400,400).centerCrop().into(holder.iv)
         holder.iv.setTag(playlists[position].uri)
     }
 

@@ -4,17 +4,16 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.media3.ui.PlayerNotificationManager
-import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.findNavController
 import com.example.musicplayerapp.databinding.ActivityMainBinding
 import com.example.musicplayerapp.service.MediaPlayerService
 
@@ -50,6 +49,52 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(StreamsViewModel ::class.java)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        viewModel.currentFragmentLiveData.observe(this, Observer {
+            when(it){
+                null->{
+                    binding.infoBtn.setColorFilter(Color.BLACK)
+                    binding.donateBtn.setColorFilter(Color.BLACK)
+                    binding.homeBtn.setColorFilter(Color.BLACK)
+                    binding.playerBtn.setColorFilter(Color.BLACK)
+                }
+                "main"->{
+                    binding.infoBtn.setColorFilter(Color.BLACK)
+                    binding.donateBtn.setColorFilter(Color.BLACK)
+                    binding.homeBtn.setColorFilter(Color.parseColor("#FF3F7B"))
+                    binding.playerBtn.setColorFilter(Color.BLACK)
+                }
+                "player"->{
+                    binding.infoBtn.setColorFilter(Color.BLACK)
+                    binding.donateBtn.setColorFilter(Color.BLACK)
+                    binding.homeBtn.setColorFilter(Color.BLACK)
+                    when(viewModel.currentStreamLive.value){
+                        "myata"->{binding.playerBtn.setColorFilter(Color.parseColor("#FFCCFF"))}
+                        "gold"->{binding.playerBtn.setColorFilter(Color.parseColor("#FF3F7B"))}
+                        "myata_hits"->{binding.playerBtn.setColorFilter(Color.parseColor("#FF3F7B"))}
+                    }
+                }
+                "donate"->{
+                    binding.infoBtn.setColorFilter(Color.BLACK)
+                    binding.donateBtn.setColorFilter(Color.parseColor("#FF3F7B"))
+                    binding.homeBtn.setColorFilter(Color.BLACK)
+                    binding.playerBtn.setColorFilter(Color.BLACK)
+                }
+                "info"->{
+                    binding.donateBtn.setColorFilter(Color.BLACK)
+                    binding.infoBtn.setColorFilter(Color.parseColor("#FF3F7B"))
+                    binding.homeBtn.setColorFilter(Color.BLACK)
+                    binding.playerBtn.setColorFilter(Color.BLACK)
+                }
+            }
+        })
+
+
+        if(intent.action != Intent.ACTION_MAIN){
+            viewModel.currentStreamLive.value = intent.action
+            viewModel.ifNeedToNavigateStraightToPlayer = true
+        }
+
 
         supportActionBar?.hide()
     }

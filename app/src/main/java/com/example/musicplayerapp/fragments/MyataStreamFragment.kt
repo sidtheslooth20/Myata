@@ -1,6 +1,7 @@
 package com.example.musicplayerapp.fragments
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -37,6 +38,9 @@ class MyataStreamFragment() : Fragment() {
 
         vm = (activity as MainActivity).viewModel
 
+        vm.currentFragmentLiveData.value = "player"
+        vm.ifNeedToNavigateStraightToPlayer = false
+
         arguments?.takeIf { it.containsKey(STREAM) }?.apply {
             stream = getString(STREAM).toString()
         }
@@ -47,7 +51,6 @@ class MyataStreamFragment() : Fragment() {
         )
 
         binding.mainAuthor.text = ""
-
 
         vm.isPlaying.observe(viewLifecycleOwner, Observer {
             if(it){
@@ -106,20 +109,24 @@ class MyataStreamFragment() : Fragment() {
         })
 
         vm.currentStreamLive.observe(viewLifecycleOwner, Observer {
+
             var intent = Intent()
             intent.setAction("switch_track")
             when(it){
                 "myata"->{
                     intent.putExtra("artist",vm.currentMyataState.value?.artist)
                     intent.putExtra("song",vm.currentMyataState.value?.song)
+                    (activity as MainActivity).binding.playerBtn.setColorFilter(Color.parseColor("#FFCCFF"))
                 }
                 "gold"->{
                     intent.putExtra("artist",vm.currentGoldState.value?.artist)
                     intent.putExtra("song",vm.currentGoldState.value?.song)
+                    (activity as MainActivity).binding.playerBtn.setColorFilter(Color.parseColor("#FF3F7B"))
                 }
                 "myata_hits"->{
                     intent.putExtra("artist",vm.currentXtraState.value?.artist)
                     intent.putExtra("song",vm.currentXtraState.value?.song)
+                    (activity as MainActivity).binding.playerBtn.setColorFilter(Color.parseColor("#FF3F7B"))
                 }
             }
             context?.let { it1 ->
@@ -142,6 +149,8 @@ class MyataStreamFragment() : Fragment() {
     }
 
     override fun onResume() {
+        vm.currentFragmentLiveData.value = "player"
+
         updatePlayer()
 
         when(stream){

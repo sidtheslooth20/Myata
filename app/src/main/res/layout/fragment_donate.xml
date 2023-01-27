@@ -57,6 +57,7 @@
                             android:orientation="horizontal">
 
                             <EditText
+                                android:fontFamily="@font/mullerregular"
                                 android:id="@+id/summ"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -72,10 +73,11 @@
                                 app:layout_constraintBottom_toBottomOf="parent"/>
 
                             <androidx.appcompat.widget.SwitchCompat
+                                app:switchPadding="0dp"
                                 android:thumb="@drawable/payment_thumb"
                                 app:track="@drawable/payment_switch"
                                 android:id="@+id/switch_ac"
-                                app:switchMinWidth="200dp"
+                                app:switchMinWidth="129dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="30dp"
                                 android:layout_width="wrap_content"
@@ -89,6 +91,8 @@
                             android:paddingTop="15dp"
                             android:layout_marginLeft="30dp"
                             android:layout_marginRight="30dp"
+                            android:hint="Комментарий"
+                            android:fontFamily="@font/mullerregular"
                             android:gravity="top"
                             android:maxHeight="164dp"
                             android:layout_gravity="center"
@@ -100,6 +104,7 @@
                             android:layout_width="match_parent" />
 
                         <Button
+                            android:fontFamily="@font/mullerregular"
                             android:id="@+id/sendBtn"
                             android:layout_height="wrap_content"
                             android:layout_width="match_parent"

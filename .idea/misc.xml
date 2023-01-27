@@ -21,6 +21,8 @@
         <entry key="..\:/Myata/app/src/main/res/layout/fragment_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Myata/app/src/main/res/layout/fragment_streams.xml" value="0.2" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1615" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/comment_bg.xml" value="0.1655" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/gold_banner.xml" value="0.264" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/gradient_bg_main_menu.xml" value="0.1205" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/ic_____________.xml" value="0.1" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/ic_donate.xml" value="0.185" />
@@ -29,17 +31,22 @@
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/ic_switch_bank.xml" value="0.2703125" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/ic_switch_umoney.xml" value="0.2703125" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/ic_thumb_bank.xml" value="0.1615" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/ic_thumb_umoney.xml" value="0.2215" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/image_view_ovalrect.xml" value="0.2703125" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/info_btn.xml" value="0.1215" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/myata_banner.xml" value="0.1215" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/payment_switch.xml" value="0.2703125" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/payment_thumb.xml" value="0.2703125" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/shadow_rect.xml" value="0.1395" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/summ.xml" value="0.2215" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/switch_bank.xml" value="0.2325" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/switch_umoney.xml" value="0.2325" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/drawable/xtra_banner.xml" value="0.1215" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/font/muller.xml" value="0.22625580413676658" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/font/muller_regular.xml" value="0.22625580413676658" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout-sw600dp/fragment_main.xml" value="0.1" />
-        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/activity_main.xml" value="0.152" />
-        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_donate.xml" value="0.176" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_donate.xml" value="0.4" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_info.xml" value="0.16905901116427433" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_main.xml" value="0.2" />
         <entry key="..\:/Users/samak/Desktop/Myata/app/src/main/res/layout/fragment_myata_stream.xml" value="0.1468721668177697" />
