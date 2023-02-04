@@ -54,16 +54,24 @@ class MyataStreamFragment() : Fragment() {
 
         vm.isPlaying.observe(viewLifecycleOwner, Observer {
             if(it){
-                binding.btnPlay.setImageResource(R.drawable.pause_btn)
+                when(stream){
+                    "myata"->{binding.btnPlay.setImageResource(R.drawable.pause_btn)}
+                    "gold"->{binding.btnPlay.setImageResource(R.drawable.pause_btn_yellow)}
+                    "myata_hits"->{binding.btnPlay.setImageResource(R.drawable.pause_btn_pink)}
+                }
             }
             else{
-                binding.btnPlay.setImageResource(R.drawable.btn_play)
+                when(stream){
+                    "myata"->{binding.btnPlay.setImageResource(R.drawable.btn_play)}
+                    "gold"->{binding.btnPlay.setImageResource(R.drawable.btn_play_yellow)}
+                    "myata_hits"->{binding.btnPlay.setImageResource(R.drawable.btn_play_pink)}
+                }
             }
         })
 
         when(stream){
             "myata"->{
-                binding.constraintLayout.setBackgroundResource(R.drawable.myata_bg)
+                binding.backgroundImage.setImageResource(R.drawable.myata_bg)
                 vm.currentMyataState.observe(viewLifecycleOwner, Observer {
                     if (it != null) {
                         updateUI(it)
@@ -71,7 +79,7 @@ class MyataStreamFragment() : Fragment() {
                 })
             }
             "gold"-> {
-                binding.constraintLayout.setBackgroundResource(R.drawable.gold_bg)
+                binding.backgroundImage.setImageResource(R.drawable.gold_bg)
                 vm.currentGoldState.observe(viewLifecycleOwner, Observer {
                     if (it != null) {
                         updateUI(it)
@@ -79,7 +87,7 @@ class MyataStreamFragment() : Fragment() {
                 })
             }
             "myata_hits"->{
-                binding.constraintLayout.setBackgroundResource(R.drawable.xtra_bg)
+                binding.backgroundImage.setImageResource(R.drawable.xtra_bg)
                 vm.currentXtraState.observe(viewLifecycleOwner, Observer {
                     if (it != null) {
                         updateUI(it)
@@ -116,17 +124,29 @@ class MyataStreamFragment() : Fragment() {
                 "myata"->{
                     intent.putExtra("artist",vm.currentMyataState.value?.artist)
                     intent.putExtra("song",vm.currentMyataState.value?.song)
-                    (activity as MainActivity).binding.playerBtn.setColorFilter(Color.parseColor("#FFCCFF"))
+                    if(vm.isPlaying.value == false)
+                        binding.btnPlay.setImageResource(R.drawable.btn_play)
+                    else
+                        binding.btnPlay.setImageResource(R.drawable.pause_btn)
+                    binding.mainAuthor.setTextColor(Color.parseColor("#00E5FF"))
                 }
                 "gold"->{
                     intent.putExtra("artist",vm.currentGoldState.value?.artist)
                     intent.putExtra("song",vm.currentGoldState.value?.song)
-                    (activity as MainActivity).binding.playerBtn.setColorFilter(Color.parseColor("#FF3F7B"))
+                    if(vm.isPlaying.value == false)
+                        binding.btnPlay.setImageResource(R.drawable.btn_play_yellow)
+                    else
+                        binding.btnPlay.setImageResource(R.drawable.pause_btn_yellow)
+                    binding.mainAuthor.setTextColor(Color.parseColor("#FFFF00"))
                 }
                 "myata_hits"->{
                     intent.putExtra("artist",vm.currentXtraState.value?.artist)
                     intent.putExtra("song",vm.currentXtraState.value?.song)
-                    (activity as MainActivity).binding.playerBtn.setColorFilter(Color.parseColor("#FF3F7B"))
+                    if(vm.isPlaying.value == false)
+                        binding.btnPlay.setImageResource(R.drawable.btn_play_pink)
+                    else
+                        binding.btnPlay.setImageResource(R.drawable.pause_btn_pink)
+                    binding.mainAuthor.setTextColor(Color.parseColor("#FFCCFF"))
                 }
             }
             context?.let { it1 ->

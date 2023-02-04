@@ -56,34 +56,77 @@
                             android:layout_width="match_parent"
                             android:orientation="horizontal">
 
-                            <EditText
-                                android:fontFamily="@font/mullerregular"
-                                android:id="@+id/summ"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/summ"
-                                android:layout_gravity="center"
-                                android:stretchColumns="1"
-                                android:layout_marginLeft="30dp"
-                                android:gravity="center"
-                                android:hint="Сумма"
-                                android:inputType="number"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"/>
+                            <HorizontalScrollView
+                                android:layout_height="0dp"
+                                android:layout_width="match_parent"
+                                android:layout_marginTop="90dp"
+                                android:orientation="horizontal"
+                                android:layout_weight="7"
+                                android:id="@+id/summs"
+                                android:scrollbars="none">
 
-                            <androidx.appcompat.widget.SwitchCompat
-                                app:switchPadding="0dp"
-                                android:thumb="@drawable/payment_thumb"
-                                app:track="@drawable/payment_switch"
-                                android:id="@+id/switch_ac"
-                                app:switchMinWidth="129dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="30dp"
-                                android:layout_width="wrap_content"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"/>
+                                <LinearLayout
+                                    android:layout_height="match_parent"
+                                    android:layout_width="match_parent">
+
+                                    <Button
+                                        android:id="@+id/sum100"
+                                        android:layout_height="match_parent"
+                                        android:layout_width="wrap_content"
+                                        app:tint="@color/white"
+                                        android:text="100"
+                                        android:background="@drawable/summ"
+                                        android:layout_marginStart="5dp"
+                                        android:layout_marginEnd="5dp"
+                                        />
+
+                                    <Button
+                                        android:id="@+id/sum200"
+                                        android:layout_height="match_parent"
+                                        android:layout_width="wrap_content"
+                                        app:tint="@color/white"
+                                        android:text="200"
+                                        android:background="@drawable/summ"
+                                        android:layout_marginStart="5dp"
+                                        android:layout_marginEnd="5dp"
+                                        />
+
+                                    <Button
+                                        android:id="@+id/sum500"
+                                        android:layout_height="match_parent"
+                                        android:layout_width="wrap_content"
+                                        app:tint="@color/black"
+                                        android:text="500"
+                                        android:background="@drawable/summ"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="5dp"
+                                        />
+
+                                    <Button
+                                        android:id="@+id/sum1000"
+                                        android:layout_height="match_parent"
+                                        android:layout_width="wrap_content"
+                                        app:tint="@color/white"
+                                        android:text="1000"
+                                        android:background="@drawable/summ"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="5dp"
+                                        />
+
+                                    <Button
+                                        android:id="@+id/sum0"
+                                        android:layout_height="match_parent"
+                                        android:layout_width="wrap_content"
+                                        app:tint="@color/white"
+                                        android:text="Другая\nсумма"
+                                        android:background="@drawable/summ"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="5dp"
+                                        />
+
+                                </LinearLayout>
+
+                            </HorizontalScrollView>
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 

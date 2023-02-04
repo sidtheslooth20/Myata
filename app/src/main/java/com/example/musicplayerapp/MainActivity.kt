@@ -53,38 +53,39 @@ class MainActivity : AppCompatActivity() {
         viewModel.currentFragmentLiveData.observe(this, Observer {
             when(it){
                 null->{
-                    binding.infoBtn.setColorFilter(Color.BLACK)
-                    binding.donateBtn.setColorFilter(Color.BLACK)
-                    binding.homeBtn.setColorFilter(Color.BLACK)
-                    binding.playerBtn.setColorFilter(Color.BLACK)
+                    binding.infoBtn.setColorFilter(Color.parseColor("#67686D"))
+                    binding.donateBtn.setColorFilter(Color.parseColor("#67686D"))
+                    binding.homeBtn.setColorFilter(Color.parseColor("#67686D"))
+                    binding.playerBtn.setColorFilter(Color.parseColor("#67686D"))
                 }
                 "main"->{
-                    binding.infoBtn.setColorFilter(Color.BLACK)
-                    binding.donateBtn.setColorFilter(Color.BLACK)
-                    binding.homeBtn.setColorFilter(Color.parseColor("#FF3F7B"))
-                    binding.playerBtn.setColorFilter(Color.BLACK)
+                    binding.infoBtn.setColorFilter(Color.parseColor("#67686D"))
+                    binding.donateBtn.setColorFilter(Color.parseColor("#67686D"))
+                    binding.homeBtn.setColorFilter(Color.parseColor("#FFFFFF"))
+                    binding.playerBtn.setColorFilter(Color.parseColor("#67686D"))
                 }
                 "player"->{
-                    binding.infoBtn.setColorFilter(Color.BLACK)
-                    binding.donateBtn.setColorFilter(Color.BLACK)
-                    binding.homeBtn.setColorFilter(Color.BLACK)
-                    when(viewModel.currentStreamLive.value){
-                        "myata"->{binding.playerBtn.setColorFilter(Color.parseColor("#FFCCFF"))}
-                        "gold"->{binding.playerBtn.setColorFilter(Color.parseColor("#FF3F7B"))}
-                        "myata_hits"->{binding.playerBtn.setColorFilter(Color.parseColor("#FF3F7B"))}
-                    }
+                    binding.infoBtn.setColorFilter(Color.parseColor("#67686D"))
+                    binding.donateBtn.setColorFilter(Color.parseColor("#67686D"))
+                    binding.homeBtn.setColorFilter(Color.parseColor("#67686D"))
+                    binding.playerBtn.setColorFilter(Color.parseColor("#FFFFFF"))
+//                    when(viewModel.currentStreamLive.value){
+//                        "myata"->{binding.playerBtn.setColorFilter(Color.parseColor("#FFCCFF"))}
+//                        "gold"->{binding.playerBtn.setColorFilter(Color.parseColor("#FF3F7B"))}
+//                        "myata_hits"->{binding.playerBtn.setColorFilter(Color.parseColor("#FF3F7B"))}
+//                    }
                 }
                 "donate"->{
-                    binding.infoBtn.setColorFilter(Color.BLACK)
-                    binding.donateBtn.setColorFilter(Color.parseColor("#FF3F7B"))
-                    binding.homeBtn.setColorFilter(Color.BLACK)
-                    binding.playerBtn.setColorFilter(Color.BLACK)
+                    binding.infoBtn.setColorFilter(Color.parseColor("#67686D"))
+                    binding.donateBtn.setColorFilter(Color.parseColor("#FFFFFF"))
+                    binding.homeBtn.setColorFilter(Color.parseColor("#67686D"))
+                    binding.playerBtn.setColorFilter(Color.parseColor("#67686D"))
                 }
                 "info"->{
-                    binding.donateBtn.setColorFilter(Color.BLACK)
-                    binding.infoBtn.setColorFilter(Color.parseColor("#FF3F7B"))
-                    binding.homeBtn.setColorFilter(Color.BLACK)
-                    binding.playerBtn.setColorFilter(Color.BLACK)
+                    binding.donateBtn.setColorFilter(Color.parseColor("#67686D"))
+                    binding.infoBtn.setColorFilter(Color.parseColor("#FFFFFF"))
+                    binding.homeBtn.setColorFilter(Color.parseColor("#67686D"))
+                    binding.playerBtn.setColorFilter(Color.parseColor("#67686D"))
                 }
             }
         })

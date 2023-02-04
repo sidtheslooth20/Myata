@@ -3,101 +3,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".fragments.MainFragment"
-        android:background="@drawable/background_main">
+        android:layout_height="match_parent">
 
-        <HorizontalScrollView
-            android:layout_height="0dp"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_marginTop="90dp"
-            android:orientation="horizontal"
-            android:layout_weight="7"
-            android:id="@+id/streams"
-            android:scrollbars="none">
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background_main"/>
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".fragments.MainFragment">
+
+            <HorizontalScrollView
+                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_marginTop="90dp"
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_weight="7"
+                android:id="@+id/streams"
+                android:scrollbars="none">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:id="@+id/myata_stream_banner"
-                    app:cardElevation="10dp"
-                    app:cardCornerRadius="20dp"
-                    app:cardBackgroundColor="#00000000"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="7dp">
+                    android:layout_height="match_parent">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/myata_banner"/>
-                </androidx.cardview.widget.CardView>
+                        android:src="@drawable/myata_banner"
+                        android:id="@+id/myata_stream_banner"
+                        android:elevation="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginEnd="7dp"
+                        android:outlineProvider="bounds"/>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/gold_stream_banner"
-                    app:cardElevation="10dp"
-                    app:cardCornerRadius="20dp"
-                    app:cardBackgroundColor="#00000000"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="7dp"
-                    android:layout_marginEnd="7dp">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/gold_banner"/>
-                </androidx.cardview.widget.CardView>
+                        android:src="@drawable/gold_banner"
+                        android:id="@+id/gold_stream_banner"
+                        android:outlineProvider="bounds"
+                        android:elevation="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginEnd="7dp"/>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/xtra_stream_banner"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    app:cardElevation="10dp"
-                    app:cardCornerRadius="20dp"
-                    app:cardBackgroundColor="#00000000"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="7dp"
-                    android:layout_marginEnd="7dp">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/xtra_banner"/>
-                </androidx.cardview.widget.CardView>
+                        android:src="@drawable/xtra_banner"
+                        android:outlineProvider="bounds"
+                        android:id="@+id/xtra_stream_banner"
+                        android:elevation="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginEnd="7dp"/>
 
+                </LinearLayout>
 
-            </LinearLayout>
+            </HorizontalScrollView>
 
-        </HorizontalScrollView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="Плейлисты"
+                android:id="@+id/playlistString"
+                android:textSize="25sp"
+                android:gravity=""
+                android:fontFamily="@font/mullerlight"
+                android:layout_marginStart="22dp"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/black"
+                android:layout_weight="1" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:text="Плейлисты"
-            android:id="@+id/playlistString"
-            android:textSize="25sp"
-            android:gravity=""
-            android:fontFamily="@font/mullerlight"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="20dp"
-            android:textColor="@color/black"
-            android:layout_weight="1" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                tools:listitem="@layout/rw_playlist_item"
+                android:id="@+id/playlists"
+                android:layout_marginBottom="55dp">
+            </androidx.recyclerview.widget.RecyclerView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6"
-            tools:listitem="@layout/rw_playlist_item"
-            android:id="@+id/playlists"
-            android:layout_marginBottom="55dp">
-        </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
 
-    </LinearLayout>
+    </FrameLayout>
+
 </layout>

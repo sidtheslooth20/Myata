@@ -26,7 +26,9 @@ class DonateFragment : Fragment() {
 
     lateinit var vm: StreamsViewModel
     lateinit var binding: FragmentDonateBinding
-    var ifAc: Boolean = false
+
+    //summ = 0 - пользователь выбрал свою сумму
+    var summ = 100
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,14 +40,11 @@ class DonateFragment : Fragment() {
             inflater, R.layout.fragment_donate, container, false
         )
 
+        binding.sum100.setBackgroundResource(R.drawable.summ_green)
+
         vm = (activity as MainActivity).viewModel
 
         vm.currentFragmentLiveData.value = "donate"
-
-        binding.switchAc.setOnCheckedChangeListener { compoundButton, b ->
-            ifAc = !b
-        }
-
         vm.isInSplitMode.observe(viewLifecycleOwner, Observer {
             if(it){
                 binding.commentText.visibility = View.GONE
@@ -55,19 +54,67 @@ class DonateFragment : Fragment() {
             }
         })
 
+        binding.sum500.setOnClickListener{
+            if (summ != 500){
+                summ = 500
+                binding.sum500.setBackgroundResource(R.drawable.summ_green)
+                binding.sum0.setBackgroundResource(R.drawable.summ)
+                binding.sum100.setBackgroundResource(R.drawable.summ)
+                binding.sum200.setBackgroundResource(R.drawable.summ)
+                binding.sum1000.setBackgroundResource(R.drawable.summ)
+            }
+        }
+
+        binding.sum1000.setOnClickListener{
+            if (summ != 1000){
+                summ = 1000
+                binding.sum500.setBackgroundResource(R.drawable.summ)
+                binding.sum0.setBackgroundResource(R.drawable.summ)
+                binding.sum100.setBackgroundResource(R.drawable.summ)
+                binding.sum200.setBackgroundResource(R.drawable.summ)
+                binding.sum1000.setBackgroundResource(R.drawable.summ_green)
+            }
+        }
+
+        binding.sum100.setOnClickListener{
+            if (summ != 100){
+                summ = 100
+                binding.sum500.setBackgroundResource(R.drawable.summ)
+                binding.sum0.setBackgroundResource(R.drawable.summ)
+                binding.sum100.setBackgroundResource(R.drawable.summ_green)
+                binding.sum200.setBackgroundResource(R.drawable.summ)
+                binding.sum1000.setBackgroundResource(R.drawable.summ)
+            }
+        }
+
+        binding.sum200.setOnClickListener{
+            if (summ != 200){
+                summ = 200
+                binding.sum500.setBackgroundResource(R.drawable.summ)
+                binding.sum0.setBackgroundResource(R.drawable.summ)
+                binding.sum100.setBackgroundResource(R.drawable.summ)
+                binding.sum200.setBackgroundResource(R.drawable.summ_green)
+                binding.sum1000.setBackgroundResource(R.drawable.summ)
+            }
+        }
+
+        binding.sum0.setOnClickListener{
+            if (summ != 0){
+                summ = 0
+                binding.sum500.setBackgroundResource(R.drawable.summ)
+                binding.sum0.setBackgroundResource(R.drawable.summ_green)
+                binding.sum100.setBackgroundResource(R.drawable.summ)
+                binding.sum200.setBackgroundResource(R.drawable.summ)
+                binding.sum1000.setBackgroundResource(R.drawable.summ)
+            }
+        }
+
         binding.sendBtn.setOnClickListener{
 
-            if(binding.summ.text!=null){
-                if(!binding.summ.text.isBlank()){
-                    var summ = binding.summ.text.toString().toInt()
-                    if(summ <= 15000 && summ >= 100){
-                        binding.form.visibility = View.GONE
-                        binding.webView.visibility = View.VISIBLE
-                        setWebViewClient()
-                        makePay(summ, binding.commentText.text.toString(), if(ifAc) "ac" else "bc")
-                    }
-                }
-            }
+            binding.form.visibility = View.GONE
+            binding.webView.visibility = View.VISIBLE
+            setWebViewClient()
+            makePay(summ, binding.commentText.text.toString(), "ac")
         }
 
         (activity as MainActivity).binding.playerBtn.setOnClickListener {
@@ -87,47 +134,33 @@ class DonateFragment : Fragment() {
             findNavController().navigate(R.id.home)
         }
 
-        binding.summ.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(p0!=null){
-                    if(!p0.isBlank()){
-                        if(p0.toString().toInt() <= 15000 && p0.toString().toInt() >= 100)
-                            binding.summ.background.setColorFilter(Color.parseColor("#5FD9B4"), PorterDuff.Mode.MULTIPLY)
-                        else
-                            binding.summ.background.setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY)
-                    }
-                }
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
-        })
-
         return binding.root
     }
 
     private fun makePay(sum:Int, comment: String, paymentType: String)
     {
-        val order_id = "123"
-        val url = "https://yoomoney.ru/quickpay/confirm.xml"
-        val postData = "receiver=410015757768507" +
-                "&formcomment=" + comment +
-                "&short-dest=" + "Пожертовование Radio Myata"+
-                "&label=$order_id" +
-                "&quickpay-form=donate" +
-                "&targets=" + "Пожертовование Radio Myata" +
-                "&sum=$sum" +
-                "&comment=" + comment
-                "&need-fio=false" +
-                "&need-email=false" +
-                "&need-phone=false" +
-                "&need-address=false" +
-                "&paymentType=${paymentType}"
+        val order_id = "1"
+        var url = "https://yoomoney.ru/quickpay/confirm.xml"
+        if(sum!=0) {
+            val postData = "receiver=410015757768507" +
+                    "&formcomment=" + comment +
+                    "&short-dest=" + "Пожертовование Radio Myata" +
+                    "&label=$order_id" +
+                    "&quickpay-form=donate" +
+                    "&targets=" + "Пожертовование Radio Myata" +
+                    "&sum=$sum" +
+                    "&comment=" + comment
+            "&need-fio=false" +
+                    "&need-email=false" +
+                    "&need-phone=false" +
+                    "&need-address=false" +
+                    "&paymentType=${paymentType}"
 
-        binding.webView.postUrl(url, postData.toByteArray())
+            binding.webView.postUrl(url, postData.toByteArray())
+        }
+        else{
+            binding.webView.loadUrl("https://yoomoney.ru/to/410015757768507")
+        }
     }
 
     private fun setWebViewClient()
@@ -160,6 +193,5 @@ class DonateFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.summ.background.setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY)
     }
 }

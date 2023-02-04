@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicplayerapp.R
 import com.example.musicplayerapp.StreamsViewModel
 import com.squareup.picasso.Picasso
-import jp.wasabeef.picasso.transformations.CropSquareTransformation
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 
 
-class PlaylistAdapter(private val playlists: List<StreamsViewModel.YandexPlaylist>, private val onItemClick: (position: Int) -> Unit):
+class PlaylistAdapter(private val playlists: List<StreamsViewModel.MyataPlaylist>, private val onItemClick: (position: Int) -> Unit):
     RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>() {
 
     class PlaylistViewHolder(itemView: View, private val onItemClick: (position: Int) -> Unit) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
@@ -32,7 +31,7 @@ class PlaylistAdapter(private val playlists: List<StreamsViewModel.YandexPlaylis
     }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
-        Picasso.get().load(playlists[position].img).transform(RoundedCornersTransformation(45,0)).resize(400,400).centerCrop().into(holder.iv)
+        Picasso.get().load(playlists[position].img).transform(RoundedCornersTransformation(15,0)).resize(400,400).centerCrop().into(holder.iv)
         holder.iv.setTag(playlists[position].uri)
     }
 

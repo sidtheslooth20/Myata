@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
-import android.os.Build
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -22,7 +21,12 @@ import kotlinx.coroutines.withContext
 import okhttp3.*
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
+import java.io.BufferedReader
 import java.io.IOException
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 
 class StreamsViewModel(app: Application):AndroidViewModel(app) {
@@ -32,7 +36,7 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
     var currentXtraState = MutableLiveData<PlayerState?>()
     var isPlaying = MutableLiveData<Boolean>()
     var isInSplitMode = MutableLiveData<Boolean>()
-    var playlistList = MutableLiveData<MutableList<YandexPlaylist>>()
+    var playlistList = MutableLiveData<MutableList<MyataPlaylist>>()
     var currentStreamLive = MutableLiveData<String?>()
     var currentFragmentLiveData = MutableLiveData<String>()
     @SuppressLint("StaticFieldLeak")
@@ -74,7 +78,7 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
     fun getPlaylists() = viewModelScope.launch {
         while (true){
             try{
-                requestYandex()
+                requestMyata()
                 break
             }
             catch (e:Exception){
@@ -84,28 +88,28 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
         }
     }
 
-    suspend fun requestYandex() = withContext(Dispatchers.IO){
-        val bufferList: MutableList<YandexPlaylist> = mutableListOf()
-        val gson = Gson()
-        val client = OkHttpClient.Builder().followRedirects(false).followSslRedirects(false).build()
-        val request = Request.Builder()
-            .url("https://api.music.yandex.net/users/662251307/playlists/list")
-            .header("Accept", "application/json")
-            .header("Content-Type", "application/x-www-form-urlencoded")
-            .build()
+    suspend fun requestMyata() = withContext(Dispatchers.IO){
 
-        client.newCall(request).execute().use { response->
-            if(!response.isSuccessful) throw IOException("Unexpected code $response")
+        try {
+            val url = URL("https://radiomyata.ru/covers/playlists.txt")
 
-            val playlist_list = gson.fromJson(response.body?.string(), Map::class.java).get("result") as List<Map<String, Any>>
-
-            for (i in playlist_list){
-                bufferList.add(YandexPlaylist(
-                    "https://music.yandex.ru/users/shaldin.voice/playlists/${i.get("kind").toString().replace(".0","")}",
-                    Uri.parse("https://"+(i.get("cover") as Map<String, Any>).get("uri").toString().replace("%%","400x400"))))
-               }
-            playlistList.postValue(bufferList)
-            Log.e("Count", playlist_list.size.toString())
+            val connection: HttpURLConnection = url.openConnection() as HttpsURLConnection
+            val br = BufferedReader(InputStreamReader(connection.getInputStream()))
+            var lines: MutableList<MyataPlaylist> = mutableListOf()
+            val wholeText = br.readText().split("\n\n","\r\r")
+            br.close()
+            Log.d("LINE", wholeText.toString())
+            for (str in wholeText){
+                Log.d("SOSI", str.split(" — ", " - ")[0])
+                if(!str.isBlank())
+                    lines.add(MyataPlaylist(str.split(" — ", " - ")[1].trim(' '),
+                        Uri.parse(str.split(" — ", " - ")[0].trim(' '))))
+            }
+            Log.d("LINES", lines.toString())
+            playlistList.postValue(lines)
+        } catch (e: IOException) {
+            Log.e("IOexception", "Myata request exception: " + e.getLocalizedMessage())
+            e.printStackTrace()
         }
     }
 
@@ -120,17 +124,17 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
             val gson = Gson()
             try{
                 val request = Request.Builder()
-                    .url("https://radio.dline-media.com/mounts.json")
+                    .url("https://drh-api.dline-media.com/api/statistics?filter[organization_id]=7")
                     .header("Connection", "close")
                     .build()
 
                 client.newCall(request).execute().use { response->
                     if(!response.isSuccessful) throw IOException("Unexpected code $response")
                     val streamInfo = gson.fromJson(response.body?.string(), Map::class.java)
-
-                    val streamMyataInfo = streamInfo.get("/myata") as Map<String, String?>
-                    var songArtist = streamMyataInfo.get("now_playing")?.split("- ")
-
+                    val streamDataInfo = streamInfo.get("data") as List<Map<String,Any>>
+                    var streamsData = streamDataInfo[0].get("streams") as List<Map<String, Any>>
+                    var songData = streamsData[0].get("last_song") as Map<String,String>
+                    var songArtist = songData.get("title").toString().split("-")
                     if(currentMyataState.value?.song != songArtist?.get(1)) {
                         if(currentStreamLive.value == "myata"){
                             if(currentMyataState.value?.song != null){
@@ -175,8 +179,9 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                             Log.e("Exception", ex.toString())
                         }
                     }
-                    val streamGoldInfo = streamInfo.get("/gold") as Map<String, String?>
-                    songArtist = streamGoldInfo.get("now_playing")?.split("- ")
+                    streamsData = streamDataInfo[1].get("streams") as List<Map<String, Any>>
+                    songData = streamsData[0].get("last_song") as Map<String,String>
+                    songArtist = songData.get("title").toString().split("-")
                     if(currentGoldState.value?.song != songArtist?.get(1)) {
                         if(currentStreamLive.value == "gold"){
                             if(currentGoldState.value?.song != null){
@@ -222,8 +227,9 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
                             Log.e("Exception", ex.toString())
                         }
                     }
-                    val streamXtraInfo = streamInfo.get("/myata_hits") as Map<String, String?>
-                    songArtist = streamXtraInfo.get("now_playing")?.split("- ")
+                    streamsData = streamDataInfo[2].get("streams") as List<Map<String, Any>>
+                    songData = streamsData[0].get("last_song") as Map<String,String>
+                    songArtist = songData.get("title").toString().split("-")
                     if(currentXtraState.value?.song != songArtist?.get(1)) {
                         if(currentStreamLive.value == "myata_hits"){
                             if(currentXtraState.value?.song != null){
@@ -295,7 +301,7 @@ class StreamsViewModel(app: Application):AndroidViewModel(app) {
 
     }
 
-    class YandexPlaylist(uri: String, img: Uri){
+    class MyataPlaylist(uri: String, img: Uri){
         val uri = uri
         val img = img
     }

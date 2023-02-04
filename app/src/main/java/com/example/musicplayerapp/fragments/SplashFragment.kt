@@ -39,7 +39,7 @@ SplashFragment : Fragment() {
         }
 
         vm.playlistList.observe(viewLifecycleOwner, Observer {
-            Log.e("OBSRVR","trigger")
+            Log.e("OBSRVR",it.size.toString())
             if(it.size!=0)
                 findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
         })
