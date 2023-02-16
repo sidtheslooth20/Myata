@@ -114,6 +114,11 @@ class DonateFragment : Fragment() {
             binding.form.visibility = View.GONE
             binding.webView.visibility = View.VISIBLE
             setWebViewClient()
+
+            (activity as MainActivity).binding.infoBtn.setColorFilter(Color.parseColor("#999999"))
+            (activity as MainActivity).binding.donateBtn.setColorFilter(Color.parseColor("#FFFFFF"))
+            (activity as MainActivity).binding.homeBtn.setColorFilter(Color.parseColor("#999999"))
+            (activity as MainActivity).binding.playerBtn.setColorFilter(Color.parseColor("#999999"))
             makePay(summ, binding.commentText.text.toString(), "ac")
         }
 

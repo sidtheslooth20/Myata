@@ -82,21 +82,4 @@
             android:id="@+id/action_donateFragment_to_mainFragment"
             app:destination="@id/home" />
     </fragment>
-    <fragment
-        android:id="@+id/streams"
-        android:name="com.example.musicplayerapp.fragments.StreamsFragment"
-        android:label="StreamsFragment" >
-        <action
-            android:id="@+id/action_streamsFragment_to_donateFragment"
-            app:destination="@id/donate" />
-        <action
-            android:id="@+id/action_streamsFragment_to_playerFragment"
-            app:destination="@id/player" />
-        <action
-            android:id="@+id/action_streamsFragment_to_mainFragment"
-            app:destination="@id/home" />
-        <action
-            android:id="@+id/action_streamsFragment_to_infoFragment"
-            app:destination="@id/info" />
-    </fragment>
 </navigation>

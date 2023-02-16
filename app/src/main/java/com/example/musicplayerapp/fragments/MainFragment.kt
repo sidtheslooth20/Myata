@@ -91,7 +91,6 @@ class MainFragment : Fragment() {
             if(it){
                 binding.playlists.visibility = View.GONE
                 (activity as MainActivity).binding.bottomNavView.visibility = View.GONE
-//                binding.bottomNav.visibility = View.GONE
                 binding.playlistString.visibility = View.GONE
             }
         })
@@ -110,7 +109,6 @@ class MainFragment : Fragment() {
         if (!vm.isInSplitMode.value!!){
             binding.playlists.visibility = View.VISIBLE
             (activity as MainActivity).binding.bottomNavView.visibility = View.VISIBLE
-//            binding.bottomNav.visibility = View.VISIBLE
             binding.playlistString.visibility = View.VISIBLE
         }
 
