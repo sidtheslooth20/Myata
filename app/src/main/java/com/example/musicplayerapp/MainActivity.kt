@@ -141,7 +141,6 @@ class MainActivity : AppCompatActivity() {
             if (intent != null) {
                 if (intent.action == "Dismiss") {
                     Log.e("MAINACTIVITY", "Destroy")
-                    onDestroy()
                 }
             }
         }
